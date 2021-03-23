@@ -27,3 +27,4 @@ D:\2021\MediaTinLanh\UI\MediaTinLanh.UI\MediaTinLanh.UI\obj\Debug\MediaTinLanh.U
 D:\2021\MediaTinLanh\UI\MediaTinLanh.UI\MediaTinLanh.UI\obj\Debug\MediaTinLanh.UI.pdb
 D:\2021\MediaTinLanh\UI\MediaTinLanh.UI\MediaTinLanh.UI\obj\Debug\Controls\IntroWindow.g.cs
 D:\2021\MediaTinLanh\UI\MediaTinLanh.UI\MediaTinLanh.UI\obj\Debug\Controls\IntroWindow.baml
+D:\2021\MediaTinLanh\UI\MediaTinLanh.UI\MediaTinLanh.UI\obj\Debug\Resources\Dark.Gray.baml

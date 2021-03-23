@@ -10,8 +10,19 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <!-- Theme setting -->
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Dark.Taupe.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <FontFamily x:Key="RobotoBlack">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoBlackItalic">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoBold">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoBoldItalic">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoItalic">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoLight">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoLightItalic">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoMedium">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoRegular">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoThin">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
+            <FontFamily x:Key="RobotoThinItalic">pack://application:,,,/Skin/Fonts/Roboto/#Roboto</FontFamily>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
