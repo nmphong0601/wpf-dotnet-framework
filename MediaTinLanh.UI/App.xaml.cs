@@ -1,5 +1,6 @@
-﻿using ControlzEx.Theming;
-using MahApps.Metro.Theming;
+﻿using AutoMapper;
+using MediaTinLanh.Data;
+using MediaTinLanh.Model;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -16,23 +17,71 @@ namespace MediaTinLanh.UI
     /// </summary>
     public partial class App : Application
     {
+        static bool initialized = false;
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
-            ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithAppMode;
-            ThemeManager.Current.SyncTheme();
+            if (!initialized)
+            {
+                Mapper.Initialize(cfg =>
+                {
+                    cfg.AddProfile<MappingProfile>();
+                });
 
-            Color gray = (Color)ColorConverter.ConvertFromString("#424242");
-            SolidColorBrush grayBrush = (SolidColorBrush)(new BrushConverter().ConvertFrom("#424242"));
+                initialized = true;
+            }
+        }
+    }
 
-            ThemeManager.Current.AddTheme(new Theme("CustomDarkGray", "CustomDarkGray", "Dark", "Gray", gray, grayBrush, true, false));
-            ThemeManager.Current.AddTheme(new Theme("CustomLightGray", "CustomLightGray", "Light", "Gray", gray, grayBrush, true, false));
+    public class MappingProfile : AutoMapper.Profile
+    {
+        public MappingProfile()
+        {
+            CreateMap<NgonNgu, NgonNguModel>();
+            CreateMap<ThanhCa, ThanhCaModel>().ForMember(dest => dest.LoaiThanhCa, conf => conf.MapFrom(src => src.LoaiThanhCa))
+                                              .ForMember(dest => dest.LoiBaiHats, opt => opt.MapFrom(src => src.DanhSachLoiBaiHat))
+                                              .ForMember(dest => dest.Medias, opt => opt.MapFrom(src => src.DanhSachMedia));
 
-            ThemeManager.Current.AddTheme(RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Dark", gray));
-            ThemeManager.Current.AddTheme(RuntimeThemeGenerator.Current.GenerateRuntimeTheme("Light", gray));
+            CreateMap<LoiBaiHat, LoiBaiHatModel>();
+            CreateMap<CauKinhThanh, CauKinhThanhModel>();
+            CreateMap<BanDichCau, BanDichCauModel>();
+            CreateMap<BanDichPhienBan, BanDichPhienBanModel>();
+            CreateMap<BanDichSach, BanDichSachModel>();
+            CreateMap<Template, TemplateModel>();
+            CreateMap<Media, MediaModel>();
+            CreateMap<MediaThanhCa, MediaThanhCaModel>();
+            CreateMap<MediaType, MediaTypeModel>();
+            CreateMap<ChuDe, ChuDeModel>();
+            CreateMap<CauDo, CauDoModel>();
+            CreateMap<DapAn, DapAnModel>();
+            CreateMap<CauHoi, CauHoiModel>();
+            CreateMap<Sach, SachModel>();
+            CreateMap<PhienBan, PhienBanModel>();
+            CreateMap<BoDe, BoDe>();
+            CreateMap<GopYPhanMem, GopYPhanMemModel>();
+            CreateMap<LoaiBaiHat, LoaiBaiHatModel>();
 
-            ThemeManager.Current.ChangeTheme(this, "Dark.Gray");
+            CreateMap<NgonNguModel, NgonNgu>();
+            CreateMap<ThanhCaModel, ThanhCa>();
+            CreateMap<LoiBaiHatModel, LoiBaiHat>();
+            CreateMap<CauKinhThanhModel, CauKinhThanh>();
+            CreateMap<BanDichCauModel, BanDichCau>();
+            CreateMap<BanDichPhienBanModel, BanDichPhienBan>();
+            CreateMap<BanDichSachModel, BanDichSach>();
+            CreateMap<TemplateModel, Template>();
+            CreateMap<MediaModel, Media>();
+            CreateMap<MediaThanhCaModel, MediaThanhCa>();
+            CreateMap<MediaTypeModel, MediaType>();
+            CreateMap<ChuDeModel, ChuDe>();
+            CreateMap<CauDoModel, CauDo>();
+            CreateMap<DapAnModel, DapAn>();
+            CreateMap<CauHoiModel, CauHoi>();
+            CreateMap<SachModel, Sach>();
+            CreateMap<PhienBanModel, PhienBan>();
+            CreateMap<BoDeModel, BoDe>();
+            CreateMap<GopYPhanMemModel, GopYPhanMem>();
+            CreateMap<LoaiBaiHatModel, LoaiBaiHat>();
         }
     }
 }

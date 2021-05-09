@@ -1,18 +1,73 @@
-﻿<mah:MetroWindow x:Class="MediaTinLanh.UI.Controls.IntroWindow"
+﻿<Window x:Class="MediaTinLanh.UI.Controls.IntroWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:MediaTinLanh.UI.Controls"
+        xmlns:recources="clr-namespace:MediaTinLanh.UI.Resources"
         WindowStartupLocation="CenterScreen"
         mc:Ignorable="d"
-        ShowTitleBar="False"
-        ShowMinButton="False"
-        ShowMaxRestoreButton="False"
-        ShowCloseButton="False"
-        Title="IntroWindow" Height="450" Width="800">
+        Title="IntroWindow" WindowStyle="None" Height="450" Width="800">
+    <WindowChrome.WindowChrome>
+        <WindowChrome GlassFrameThickness="0,0,0,1" CornerRadius="0" />
+    </WindowChrome.WindowChrome>
+    <Window.Resources>
+        <recources:PercentageConverter x:Key="PercentageConverter"/>
+    </Window.Resources>
+    <Window.Background>
+        <DrawingBrush>
+            <DrawingBrush.Drawing>
+                <DrawingGroup>
+                    <ImageDrawing Rect="0,0,10,10" ImageSource="/MediaTinLanh.UI;component/Resources/images/main/background.png"/>
+                    <DrawingGroup Opacity="0.1">
+                        <ImageDrawing Rect="0,0,10,10" ImageSource="/MediaTinLanh.UI;component/Resources/images/main/logo_background.png"/>
+                    </DrawingGroup>
+                </DrawingGroup>
+            </DrawingBrush.Drawing>
+        </DrawingBrush>
+    </Window.Background>
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="3*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="3*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Border x:Name="borderLogo" Grid.Column="1" Grid.Row="0">
+            <Image x:Name="logo" Width="{Binding 
+                                            Converter={StaticResource PercentageConverter}, 
+                                            ElementName=borderLogo, 
+                                            Path=ActualWidth, 
+                                            ConverterParameter=0.7}"
+                                 Margin="5"
+                                 Source="/MediaTinLanh.UI;component/Resources/images/main/logo.png" 
+                                 HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+        </Border>
+        <Border x:Name="borderCenterTitle" Grid.Column="1" Grid.Row="1" BorderThickness="2" BorderBrush="White">
+            <TextBlock x:Name="TRÌNH_CHIẾU_CƠ_ĐỐC" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Stretch"
+                           FontSize="{Binding 
+                                    Converter={StaticResource PercentageConverter}, 
+                                    ElementName=borderCenterTitle, 
+                                    Path=ActualWidth, 
+                                    ConverterParameter=0.08}"
+                           FontFamily="{StaticResource RobotoMedium}" 
+                           IsHyphenationEnabled="True" LineStackingStrategy="BlockLineHeight" 
+                           TextAlignment="Center" TextWrapping="Wrap" Text="TRÌNH CHIẾU CƠ ĐỐC" FontWeight="Bold"/>
+        </Border>
+        <Border x:Name="borderBottomTitle" Grid.Column="1" Grid.Row="2" VerticalAlignment="Top">
+            <TextBlock x:Name="www_mediatinlanh_com" Foreground="White"
+                       FontSize="{Binding 
+                                    Converter={StaticResource PercentageConverter}, 
+                                    ElementName=borderCenterTitle, 
+                                    Path=ActualWidth, 
+                                    ConverterParameter=0.06}"
+                       FontFamily="{StaticResource RobotoMedium}"
+                       HorizontalAlignment="Center" VerticalAlignment="Center" 
+                       IsHyphenationEnabled="True" LineStackingStrategy="BlockLineHeight" Text="www.mediatinlanh.com"/>
+        </Border>
     </Grid>
-</mah:MetroWindow>
+</Window>

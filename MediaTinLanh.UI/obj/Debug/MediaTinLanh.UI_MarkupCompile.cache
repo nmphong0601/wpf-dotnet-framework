@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 D:\2021\MediaTinLanh\UI\MediaTinLanh.UI\MediaTinLanh.UI\App.xaml
-31287236438
-
-6-1236088612
-20-1922232930
-Controls\IntroWindow.xaml;MainWindow.xaml;Resources\Dark.Gray.xaml;
+645335683
+21197620569
+14-1518839062
+581855713706
+Controls\IntroWindow.xaml;Controls\TaoTrinhChieu\ucTabTuTaoTrinhChieu.xaml;Controls\ThuVienBaiHat\ucTabThuVienBaiHat.xaml;Controls\ucThanhCa.xaml;MainWindow.xaml;Resources\CustomResourceDictionary.xaml;
 
 False
 

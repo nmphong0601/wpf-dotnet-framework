@@ -1,14 +1,438 @@
-﻿<mah:MetroWindow x:Class="MediaTinLanh.UI.MainWindow"
+﻿<Window x:Class="MediaTinLanh.UI.MainWindow"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MediaTinLanh.UI"
-        WindowStartupLocation="CenterScreen"
+        xmlns:u="clr-namespace:MediaTinLanh.UI.ViewModels"
+        xmlns:c="clr-namespace:MediaTinLanh.UI.Controls"
+        xmlns:resources="clr-namespace:MediaTinLanh.UI.Resources"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TrinhChieuWindow"
+        xmlns:fa="http://schemas.fontawesome.io/icons/"
+        x:Name="windowTrinhChieu" WindowState="Maximized"
+        WindowStyle="None" Style="{StaticResource MDTLWindow}" MouseDown="Window_MouseDown">
+    <Window.Resources>
+        <resources:MathConverter x:Key="mathConverter"/>
+        <resources:PercentageConverter x:Key="percentageConverter"/>
+        <resources:MarginConverter x:Key="marginConverter"/>
+        <resources:TrangThaiConverter x:Key="TrangThaiConverter"/>
+        <resources:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
+        <resources:BoolToHiddenConverter x:Key="BoolToHiddenConverter"/>
+
+        <!-- Style -->
+        <Style x:Key="BorderButton" TargetType="Border">
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Border.Background" Value="#424242" />
+                    <Setter Property="Border.BorderThickness" Value="1" />
+                    <Setter Property="Border.BorderBrush" Value="Gray" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="MenuButton" TargetType="Button">
+            <Setter Property="Background" >
+                <Setter.Value>
+                    <SolidColorBrush Color="{StaticResource MDTLGray}"></SolidColorBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}"
+                                BorderThickness="0,0,1,0" BorderBrush="#424242" 
+                                Margin="0" Padding="0">
+                            <ContentPresenter HorizontalAlignment="Stretch" 
+                                              VerticalAlignment="Stretch"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter TargetName="border" 
+                                        Property="Background" >
+                                    <Setter.Value>
+                                        <SolidColorBrush Color="{StaticResource MDTLDarkGray}"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background">
+                        <Setter.Value>
+                            <SolidColorBrush Color="{StaticResource MDTLDarkGray}"></SolidColorBrush>
+                        </Setter.Value>
+                    </Setter>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="MenuButtonSpecial" TargetType="Button">
+            <Setter Property="Background" >
+                <Setter.Value>
+                    <SolidColorBrush Color="{StaticResource MDTLBrown}"></SolidColorBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" BorderThickness="1,0,1,0" BorderBrush="#424242">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <!-- Resource -->
+        <Button x:Key="Restore" Style="{StaticResource MDTLWindowButton}"
+                Width="30" Height="30"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+            <materialDesign:PackIcon Kind="WindowRestore"
+                                     Width="20" Height="20"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"/>
+        </Button>
+        <Button x:Key="Maximize" Style="{StaticResource MDTLWindowButton}"
+                Width="30" Height="30"
+                HorizontalAlignment="Center" VerticalAlignment="Center">
+            <materialDesign:PackIcon Kind="WindowMaximize"
+                                     Width="20" Height="20"
+                                     HorizontalAlignment="Center"
+                                     VerticalAlignment="Center"/>
+        </Button>
+    </Window.Resources>
+    <Window.Background>
+        <SolidColorBrush Color="{StaticResource MDTLGray}"></SolidColorBrush>
+    </Window.Background>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnOpenMenu">
+            <BeginStoryboard Storyboard="{StaticResource OpenMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ButtonBase.Click" SourceName="btnCloseMenu">
+            <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+    </Window.Triggers>
     <Grid>
-        
+        <Grid x:Name="grdWaiting"
+              Panel.ZIndex="1" Background="Gray"
+              Opacity="0.6" Visibility="Hidden">
+            <materialDesign:DialogHost Identifier="RootDialog">
+                <materialDesign:DialogHost.DialogContentTemplate>
+                    <DataTemplate DataType="vm:MessageViewModel">
+                        <StackPanel Margin="16">
+                            <TextBlock Text="{Binding Message}" />
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" >
+                                <Button Style="{StaticResource MDTLMaterialDesignRaisedDarkButton}"
+                                        IsDefault="True"
+                                        Margin="0 8 8 0"
+                                        Command="materialDesign:DialogHost.CloseDialogCommand">
+                                    Đóng
+                                </Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </DataTemplate>
+                </materialDesign:DialogHost.DialogContentTemplate>
+            </materialDesign:DialogHost>
+            <fa:ImageAwesome x:Name="faCircleWaiting" RenderTransformOrigin="0.5, 0.5" Icon="Spinner" VerticalAlignment="Center" HorizontalAlignment="Center" Height="40" Width="40" >
+                <fa:ImageAwesome.RenderTransform>
+                    <RotateTransform/>
+                </fa:ImageAwesome.RenderTransform>
+                <fa:ImageAwesome.Triggers>
+                    <EventTrigger RoutedEvent="Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="Foreground.Color"
+                                            From="White"
+                                            To="White"      
+                                            Duration="0:0:9.0"
+                                            AutoReverse="True"/>
+                                <DoubleAnimation                               Storyboard.TargetProperty="(fa:ImageAwesome.RenderTransform).(RotateTransform.Angle)"
+                                             To="360"
+                                             Duration="0:0:1"
+                                             RepeatBehavior="Forever"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </fa:ImageAwesome.Triggers>
+            </fa:ImageAwesome>
+        </Grid>
+        <DockPanel Margin="8 10 8 10">
+            <Grid x:Name="gridTrinhChieu">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="5*"/>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <!--#region Menu -->
+                <Grid x:Name="gridMenu" Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="5*"/>
+                        <ColumnDefinition Width="80*"/>
+                        <ColumnDefinition Width="15*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Column="0" Margin="2"
+                            BorderThickness="0 0 1 0"
+                            HorizontalAlignment="Stretch">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="{StaticResource MDTLDarkGray}"/>
+                        </Border.BorderBrush>
+                        <Image Source="/MediaTinLanh.UI;component/Resources/images/main/logo_left.png"/>
+                    </Border>
+                    <Grid Grid.Column="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="15*"/>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="15*"/>
+                            <ColumnDefinition Width="15*"/>
+                            <ColumnDefinition Width="15*"/>
+                            <ColumnDefinition Width="10*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="btnThanCa" Grid.Column="0" 
+                                    Style="{DynamicResource MenuButton}" 
+                                    Click="btnThanhCa_Click">
+                            <TextBlock x:Name="menuThanhCa"
+                                       Foreground="White"
+                                       FontSize="13"
+                                       FontFamily="{StaticResource RobotoRegular}"
+                                       IsHyphenationEnabled="True"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center" VerticalAlignment="Center"
+                                       TextWrapping="Wrap" Text="Thánh Ca"/>
+                        </Button>
+                        <Button x:Name="btnKinhThanh" Grid.Column="1" 
+                                    Style="{DynamicResource MenuButton}" 
+                                    Click="btnKinhThanh_Click">
+                            <TextBlock x:Name="menuKinhThanh"
+                                       Foreground="White"
+                                       FontSize="13" 
+                                       FontFamily="{StaticResource RobotoRegular}"
+                                       IsHyphenationEnabled="True"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center" VerticalAlignment="Center"
+                                       TextWrapping="Wrap" Text="Kinh Thánh"/>
+                        </Button>
+                        <Button x:Name="btnVideo" Grid.Column="2" 
+                                    Style="{DynamicResource MenuButton}">
+                            <TextBlock x:Name="menuVideo"
+                                       Foreground="White"
+                                       FontSize="13" 
+                                       FontFamily="{StaticResource RobotoRegular}"
+                                       IsHyphenationEnabled="True"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center" VerticalAlignment="Center"
+                                       TextWrapping="Wrap" Text="Video"/>
+                        </Button>
+                        <Button x:Name="btnHinhAnh" Grid.Column="3" 
+                                    Style="{DynamicResource MenuButton}">
+                            <TextBlock x:Name="menuHinhAnh"
+                                       Foreground="White"
+                                       FontSize="13" 
+                                       FontFamily="{StaticResource RobotoRegular}"
+                                       IsHyphenationEnabled="True"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center" VerticalAlignment="Center"
+                                       TextWrapping="Wrap" Text="Hình Ảnh"/>
+                        </Button>
+                        <Button x:Name="btnDoKinhThanh" Grid.Column="4" 
+                                    Style="{DynamicResource MenuButton}">
+                            <TextBlock x:Name="menuDoKinhThanh"
+                                       Foreground="White"
+                                       FontSize="13" 
+                                       FontFamily="{StaticResource RobotoRegular}"
+                                       IsHyphenationEnabled="True"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center" VerticalAlignment="Center"
+                                       TextWrapping="Wrap" Text="Đố Kinh Thánh"/>
+                        </Button>
+                        <Button x:Name="btnTruyenTranh" Grid.Column="5" 
+                                    Style="{DynamicResource MenuButton}">
+                            <TextBlock x:Name="menuTruyenTranh"
+                                       Foreground="White"
+                                       FontSize="13" 
+                                       FontFamily="{StaticResource RobotoRegular}"
+                                       IsHyphenationEnabled="True"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center" VerticalAlignment="Center"
+                                       TextWrapping="Wrap" Text="Truyện Tranh"/>
+                        </Button>
+                        <Button x:Name="btnTranhToMau" Grid.Column="6" 
+                                    Style="{DynamicResource MenuButton}">
+                            <TextBlock x:Name="menuTranhToMau"
+                                       Foreground="White"
+                                       FontSize="13" 
+                                       FontFamily="{StaticResource RobotoRegular}"
+                                       IsHyphenationEnabled="True"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center" VerticalAlignment="Center"
+                                       TextWrapping="Wrap" Text="Tranh Tô Màu"/>
+                        </Button>
+                        <Button x:Name="btnThietKe" Grid.Column="7" 
+                                    Style="{DynamicResource MenuButton}">
+                            <TextBlock x:Name="menuThietKe"
+                                       Foreground="White"
+                                       FontSize="13" 
+                                       FontFamily="{StaticResource RobotoRegular}"
+                                       IsHyphenationEnabled="True"
+                                       LineStackingStrategy="BlockLineHeight"
+                                       TextAlignment="Center" VerticalAlignment="Center"
+                                       TextWrapping="Wrap" Text="Thiết Kế"/>
+                        </Button>
+                    </Grid>
+
+                    <!--#region Window buttons -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" 
+                                    VerticalAlignment="Top" HorizontalAlignment="Right">
+                        <Button x:Name="btnMinimize"
+                                Style="{StaticResource MDTLWindowButton}"
+                                VerticalAlignment="Center" 
+                                Width="30" Height="30"
+                                Click="btnMinimize_Click">
+                            <materialDesign:PackIcon Kind="WindowMinimize" 
+                                                     Width="20" Height="20"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"/>
+                        </Button>
+                        <Button x:Name="btnMaximizeRestore" 
+                                    Style="{StaticResource MDTLWindowButton}"
+                                    HorizontalAlignment="Center" VerticalAlignment="Center"
+                                    Width="30" Height="30"
+                                    Click="btnMaximizeRestore_Click">
+                            <StaticResource ResourceKey="Restore"/>
+                        </Button>
+                        <Button x:Name="btnClose" 
+                                    Style="{StaticResource MDTLWindowButton}"
+                                    VerticalAlignment="Center"
+                                    Width="30" Height="30"
+                                    Click="btnClose_Click">
+                            <materialDesign:PackIcon Kind="WindowClose" 
+                                                     Width="20" Height="20"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"/>
+                        </Button>
+                    </StackPanel>
+                    <!--#endregion Window Buttons -->
+                </Grid>
+                <!--#endregion Menu -->
+
+                
+
+                <!--#region Conent -->
+                <Grid x:Name="mainThanhCa" Grid.Row="1" Grid.RowSpan="2"
+                            Visibility="Visible" Margin="0 5 0 5">
+                    <Grid.Resources>
+                        <Style TargetType="Grid">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource MDTLGray}"></SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Grid.Resources>
+                    <c:ucThanhCa/>
+                </Grid>
+                <!--#endregion Conent -->
+
+                <Grid Grid.Row="1" HorizontalAlignment="Right" Margin="0 5 0 0">
+                    <Button x:Name="btnOpenMenu"
+                            Style="{StaticResource MDTLButton}" Click="btnOpenMenu_Click">
+                        <materialDesign:PackIcon Kind="HamburgerMenu" Width="28" Height="28"
+                                                 HorizontalAlignment="Center"
+                                                 VerticalAlignment="Center"/>
+                    </Button>
+                </Grid>
+                <Grid x:Name="gridUserMenu" Grid.Row="1" Grid.RowSpan="2" Margin="0 5 0 5"
+                      Panel.ZIndex="1" RenderTransformOrigin="0.5,0.5"
+                      HorizontalAlignment="Right" Background="#282828"
+                      Opacity="1">
+                    <Grid.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="ContentSiteScaleTransform" ScaleX="0"/>
+                            <SkewTransform/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Grid.RenderTransform>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="30"/>
+                        <ColumnDefinition Width="80*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="90*"/>
+                    </Grid.RowDefinitions>
+                    <Border Grid.Column="0" Grid.Row="0">
+                        <Button x:Name="btnCloseMenu"
+                                Style="{StaticResource MDTLButtonBrownText}"
+                                Click="btnCloseMenu_Click">
+                            <materialDesign:PackIcon Kind="ArrowRight" Width="28" Height="28"
+                                                     HorizontalAlignment="Center"
+                                                     VerticalAlignment="Center"/>
+                        </Button>
+                    </Border>
+                    <StackPanel Grid.Column="1" Grid.RowSpan="2" HorizontalAlignment="Stretch">
+                        <ListView Grid.Column="1" Grid.RowSpan="2"
+                                  Style="{StaticResource MDTLMaterialDesignListView}">
+                            <ListViewItem Height="30">
+                                <Button x:Name="btnAccount" 
+                                        Style="{StaticResource MDTLButtonBrownText}">
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center">
+                                        <materialDesign:PackIcon Kind="User" Width="25" Height="25"
+                                                                 HorizontalAlignment="Left"/>
+                                        <TextBlock Text="Tài Khoản" FontSize="12"
+                                                   VerticalAlignment="Center"
+                                                   TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </ListViewItem>
+                            <ListViewItem Height="30">
+                                <Button x:Name="btnNotification"
+                                        Style="{StaticResource MDTLButtonBrownText}">
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center">
+                                        <materialDesign:PackIcon Kind="BellRing" 
+                                                                 Width="25" Height="25"
+                                                                 HorizontalAlignment="Left"/>
+                                        <TextBlock Text="Thông báo" FontSize="12"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+
+                            </ListViewItem>
+                            <ListViewItem Height="30">
+                                <Button x:Name="btnSettings"
+                                        Style="{StaticResource MDTLButtonBrownText}">
+                                    <StackPanel Orientation="Horizontal"
+                                                HorizontalAlignment="Left"
+                                                VerticalAlignment="Center">
+                                        <materialDesign:PackIcon Kind="Settings" 
+                                                                 Width="25" Height="25"
+                                                                 HorizontalAlignment="Left"/>
+                                        <TextBlock Text="Cài Đặt" FontSize="12"
+                                           VerticalAlignment="Center"
+                                           TextAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </ListViewItem>
+                        </ListView>
+                    </StackPanel>
+                    
+                </Grid>
+            </Grid>
+        </DockPanel>
     </Grid>
-</mah:MetroWindow>
+
+</Window>
