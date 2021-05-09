@@ -370,7 +370,7 @@ namespace MediaTinLanh.UI.Controls
                     selectedThanhCa.LoiBaiHats = new ObservableCollection<LoiBaiHatModel>(loiBaiHatModels);
                 }
 
-                tblNoiDungBaiHat.TextAlignment = TextAlignment.Center;
+                tblNoiDungBaiHat.TextAlignment = TextAlignment.Left;
                 tblNoiDungBaiHat.Text = string.Empty;
 
                 foreach (var loiBaiHat in selectedThanhCa.LoiBaiHats)

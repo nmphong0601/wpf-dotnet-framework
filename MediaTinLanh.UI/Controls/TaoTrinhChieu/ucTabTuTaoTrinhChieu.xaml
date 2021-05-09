@@ -8,14 +8,7 @@
              xmlns:resources="clr-namespace:MediaTinLanh.UI.Resources"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800"
-             Height="{Binding 
-                RelativeSource={RelativeSource Self}, 
-                Path=Parent.ActualHeight}"
-             Width="{Binding RelativeSource={RelativeSource Self},
-                Path=Parent.ActualWidth}"
-             Background="#282828"
-             >
+             d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <resources:MathConverter x:Key="mathConverter"/>
@@ -212,60 +205,70 @@
         <!-- Resource -->
     </UserControl.Resources>
 
-    <Grid x:Name="gridTaoTrinhChieu" Margin="15">
+    <Grid x:Name="gridTaoTrinhChieu">
+        <Grid.Resources>
+            <Style TargetType="Grid">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"></SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </Grid.Resources>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="50*"/>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="49.5*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="6*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="70*" />
+            <RowDefinition Height="20*" />
+            <RowDefinition Height="10*" />
         </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0" Margin="0,0,5,0">
+        <DockPanel Grid.Row="0" Grid.Column="0" Margin="0,0,0,0">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
-                <DockPanel Grid.Column="0">
-                    <TextBlock 
-                        FontFamily="{DynamicResource RobotoRegular}"
-                        FontSize="16"
-                        DockPanel.Dock="Top"
-                        Margin="0,0,0,5"
-                        >
-                        Lời bài hát:
-                    </TextBlock>
-                    <TextBox 
-                        Text="{Binding NoiDungNhap, UpdateSourceTrigger=PropertyChanged}"
-                        TextChanged="TextBox_TextChanged"
-                        FontFamily="{StaticResource RobotoRegular}"
-                        TextWrapping="WrapWithOverflow"
-                        AcceptsReturn="True"
-                        VerticalScrollBarVisibility="Auto"
-                        Foreground="WhiteSmoke"
-                        Padding="10">
-                        <TextBox.Style>
-                            <Style TargetType="TextBox">
-                                <Setter Property="Background">
-                                    <Setter.Value>
-                                        <SolidColorBrush Color="{StaticResource ExtGrayColor}"></SolidColorBrush>
-                                    </Setter.Value>
-                                </Setter>
-                                <Style.Triggers>
-                                    <Trigger Property="IsFocused" Value="True">
-                                        <Setter Property="BorderThickness" Value="0"></Setter>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </TextBox.Style>
-                    </TextBox>
-                </DockPanel>
-                <DockPanel Grid.Column="1"  x:Name="slidesList">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="90*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" FontFamily="{StaticResource RobotoRegular}" 
+                           Foreground="WhiteSmoke" Text="Lời bài hát:" VerticalAlignment="Center"/>
+                <TextBox Grid.Row="1"
+                         Text="{Binding NoiDungNhap, UpdateSourceTrigger=PropertyChanged}"
+                         TextChanged="TextBox_TextChanged" FontFamily="{StaticResource RobotoRegular}"
+                         TextWrapping="WrapWithOverflow" AcceptsReturn="True" Padding="10"
+                         VerticalScrollBarVisibility="Auto" Foreground="WhiteSmoke" >
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource ExtGrayColor}"></SolidColorBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsFocused" Value="True">
+                                    <Setter Property="BorderThickness" Value="0"></Setter>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+                
+            </Grid>
+        </DockPanel>
+        <DockPanel Grid.Row="0" Grid.Column="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60*"/>
+                    <ColumnDefinition Width="40*"/>
+                </Grid.ColumnDefinitions>
+                <DockPanel Grid.Column="0" x:Name="slidesList">
                     <Image Name="CurrentSlide"></Image>
                 </DockPanel>
-
-                <ListView
-                        Grid.Column="2"
-                        Name="SlidesListView">
+                <ListView Grid.Column="1" Name="SlidesListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -277,16 +280,15 @@
                 </ListView>
             </Grid>
         </DockPanel>
-        <DockPanel Grid.Row="1">
+        <DockPanel Grid.Row="1" Grid.ColumnSpan="3">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
 
                 <DockPanel Grid.Column="0">
-                    <TextBlock FontSize="16"
-                               DockPanel.Dock="Top">
+                    <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Top">
                         Lựa chọn mẫu Powerpoint định dạng 16:9
                     </TextBlock>
                     <!-- list hình 16:9 -->
@@ -319,10 +321,9 @@
                     </Grid>
                 </DockPanel>
                 <DockPanel Grid.Column="1">
-                    <TextBlock FontSize="16" DockPanel.Dock="Top">
+                    <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Top">
                         Lựa chọn mẫu Powerpoint định dạng 4:3
                     </TextBlock>
-                    
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
@@ -351,87 +352,44 @@
                             Foreground="{StaticResource IconColor}"/>
                     </Grid>
                 </DockPanel>
-
             </Grid>
         </DockPanel>
-        <DockPanel Grid.Row="2" Margin="0,5">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock
-                    FontSize="16"
-                    TextAlignment="Left"
-                    TextWrapping="Wrap">
+        <DockPanel Grid.Row="2" Grid.Column="0">
+            <Viewbox Stretch="Uniform" StretchDirection="DownOnly">
+                <TextBlock TextAlignment="Left" TextWrapping="Wrap"
+                           HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                     <Bold><Italic>Lưu ý:</Italic></Bold> Nhấn Enter 01 lần để xuống hàng. Nhấn Enter 02 lần để tạo Slide mới. <LineBreak />
                     Khi nhấn nút "Tải bài hát lên máy chủ", bài hát sẽ được lưu trữ tại máy chủ Media Tin Lành. <LineBreak />
                     Chúng tôi không chịu trách nhiệm về nội dung người dùng tải lên.
                 </TextBlock>
-                <DockPanel Grid.Column="1">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="1.5*" />
-                            <ColumnDefinition Width="1.5*" />
-                        </Grid.ColumnDefinitions>
+            </Viewbox>
+        </DockPanel>
+        <DockPanel Grid.Row="2" Grid.Column="2">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="24.5*" />
+                    <ColumnDefinition Width="38.5*" />
+                    <ColumnDefinition Width="37*" />
+                </Grid.ColumnDefinitions>
 
-                        <Border Grid.Column="0" >
-                            <Button x:Name="btnTaiPPTX" 
-                                Click="btnTaiPPTX_Click"
-                                Style="{StaticResource MenuButton}"
-                                Width="{Binding ActualWidth, ElementName=gridTaoTrinhChieu, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*8}"
-                                Height="{Binding ActualHeight, ElementName=gridTaoTrinhChieu, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*6}"
-                                >
-                                <TextBlock x:Name="tbxTaiPPTX"
-                                    Foreground="{DynamicResource TextColor}"
-                                    FontSize="{Binding ActualWidth,ElementName=gridTaoTrinhChieu, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*1.1}" 
-                                    FontFamily="{DynamicResource RobotoRegular}" 
-                                    IsHyphenationEnabled="True" 
-                                    LineHeight="{Binding ElementName=btnThanCa, Path=ActualHeight, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*50}"
-                                    LineStackingStrategy="BlockLineHeight" TextAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap"           
-                                >
-                                    Khởi tạo PPTX
-                                </TextBlock>
-                            </Button>
-                        </Border>
-
-                        <Border Grid.Column="1">
-                            <Button
-                            x:Name="btnUploadBaiHai"
-                            Style="{StaticResource MenuButton}"
-                            Width="{Binding ElementName=gridTaoTrinhChieu, Path=ActualWidth, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*16}"
-                            Height="{Binding ElementName=gridTaoTrinhChieu, Path=ActualHeight, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*6}"
-                             >
-                                <TextBlock
-                                    Foreground="WhiteSmoke"
-                                    FontSize="{Binding ElementName=gridTaoTrinhChieu, Path=ActualWidth, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*1}" 
-                                    FontFamily="{DynamicResource RobotoRegular}" IsHyphenationEnabled="True" LineHeight="{Binding ElementName=btnThanCa, Path=ActualHeight, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*50}"
-                                    LineStackingStrategy="BlockLineHeight" TextAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap">
-                                        Tải bài hát lên máy chủ
-                                </TextBlock>
-                            </Button>
-                        </Border>
-
-                        <Border Grid.Column="2">
-                            <Button
-                                x:Name="btnVieoHuongDan"
-                                Style="{StaticResource MenuButton}"
-                                Width="{Binding ElementName=gridTaoTrinhChieu, Path=ActualWidth, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*16}"
-                                Height="{Binding ElementName=gridTaoTrinhChieu, Path=ActualHeight, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*6}"
-                            >
-                                <TextBlock x:Name="tbxVideoHD"
-                                    Foreground="WhiteSmoke"
-                                    FontSize="{Binding ElementName=gridTaoTrinhChieu, Path=ActualWidth, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*1}" 
-                                    FontFamily="{DynamicResource RobotoRegular}" IsHyphenationEnabled="True" LineHeight="{Binding ElementName=btnThanCa, Path=ActualHeight, Converter={StaticResource mathConverter}, ConverterParameter=@VALUE/100*50}"
-                                    LineStackingStrategy="BlockLineHeight" TextAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap">
-                                    Xem video hướng dẫn
-                                </TextBlock>
-                            </Button>
-                        </Border>
-
-                    </Grid>
-                </DockPanel>
+                <Button x:Name="btnTaiPPTX" Grid.Column="0" Click="btnTaiPPTX_Click" Style="{StaticResource MDTLButtonBrown}">
+                    <TextBlock x:Name="tbxTaiPPTX" FontFamily="{DynamicResource RobotoRegular}" FontSize="14"
+                                       FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center" Text="Khởi tạo PPTX">
+                    </TextBlock>
+                </Button>
+                <Button x:Name="btnUploadBaiHai" Grid.Column="1" Style="{StaticResource MDTLButtonBrown}">
+                    <TextBlock FontFamily="{DynamicResource RobotoRegular}" FontSize="14"
+                                       FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap"
+                                       VerticalAlignment="Center" HorizontalAlignment="Center" Text="Tải bài hát lên máy chủ">
+                    </TextBlock>
+                </Button>
+                <Button x:Name="btnVieoHuongDan" Grid.Column="2" Style="{StaticResource MDTLButtonBrown}">
+                    <TextBlock x:Name="tbxVideoHD" FontFamily="{DynamicResource RobotoRegular}" FontSize="14"
+                                           FontWeight="Bold" TextAlignment="Center" TextWrapping="Wrap"
+                                           VerticalAlignment="Center" HorizontalAlignment="Center" Text="Xem video hướng dẫn">
+                    </TextBlock>
+                </Button>
             </Grid>
         </DockPanel>
     </Grid>

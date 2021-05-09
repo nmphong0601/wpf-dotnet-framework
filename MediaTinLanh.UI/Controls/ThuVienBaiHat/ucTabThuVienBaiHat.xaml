@@ -142,10 +142,10 @@
             <Border Grid.Row="1" BorderBrush="Transparent" BorderThickness="2">
                 <Grid x:Name="gridListLoaiBaiHat">
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="18*"/>
+                        <ColumnDefinition Width="32*"/>
                         <ColumnDefinition Width="20*"/>
-                        <ColumnDefinition Width="35*"/>
-                        <ColumnDefinition Width="20*"/>
-                        <ColumnDefinition Width="25*"/>
+                        <ColumnDefinition Width="30*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100*"/>
@@ -161,7 +161,7 @@
                                       BorderBrush="White" BorderThickness="1" Checked="ckbThanhCa_Checked">
                         </CheckBox>
                         <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Left">
-                            <TextBlock Text="Thánh Ca" HorizontalAlignment="Stretch"
+                            <TextBlock Text="Thánh Ca" HorizontalAlignment="Stretch" FontWeight="Bold"
                                        Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"/>
                         </Viewbox>
                     </Grid>
@@ -176,7 +176,7 @@
                                       BorderBrush="White" BorderThickness="1">
                         </CheckBox>
                         <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Tôn Vinh Chúa Hằng Hữu" HorizontalAlignment="Stretch"
+                            <TextBlock Text="Tôn Vinh Chúa Hằng Hữu" HorizontalAlignment="Stretch" FontWeight="Bold"
                                        Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"/>
                         </Viewbox>
                     </Grid>
@@ -191,7 +191,7 @@
                                       BorderBrush="White" BorderThickness="1">
                         </CheckBox>
                         <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Biệt Thánh Ca" HorizontalAlignment="Stretch"
+                            <TextBlock Text="Biệt Thánh Ca" HorizontalAlignment="Stretch" FontWeight="Bold"
                                        Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"/>
                         </Viewbox>
                     </Grid>
@@ -206,7 +206,7 @@
                                       BorderBrush="White" BorderThickness="1">
                         </CheckBox>
                         <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Kinh Thánh Đối Đáp" HorizontalAlignment="Stretch"
+                            <TextBlock Text="Kinh Thánh Đối Đáp" HorizontalAlignment="Stretch" FontWeight="Bold"
                                        Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"/>
                         </Viewbox>
                     </Grid>
@@ -275,8 +275,8 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10*"></RowDefinition>
-                    <RowDefinition Height="80*"></RowDefinition>
-                    <RowDefinition Height="10*"></RowDefinition>
+                    <RowDefinition Height="82*"></RowDefinition>
+                    <RowDefinition Height="8*"></RowDefinition>
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" Grid.ColumnSpan="5">
                     <TextBlock Text="Nội dung bài hát" Foreground="WhiteSmoke"

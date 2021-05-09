@@ -178,7 +178,7 @@
                 <local:ucTabThuVienBaiHat/>
             </TabItem>
             <TabItem Header="Tự tạo trình chiếu">
-                <!--<local:ucTabTuTaoTrinhChieu/>-->
+                <local:ucTabTuTaoTrinhChieu/>
             </TabItem>
             <!--<TabItem Header="Tải về bài hát" />-->
         </TabControl>
