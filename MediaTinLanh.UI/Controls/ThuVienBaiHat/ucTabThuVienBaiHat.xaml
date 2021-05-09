@@ -215,13 +215,11 @@
             <Grid Grid.Row="2">
                 <Grid x:Name="gridLayoutListView" Visibility="Hidden">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="40*"/>
-                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="70*"/>
                         <ColumnDefinition Width="30*"/>
                     </Grid.ColumnDefinitions>
                     <Grid Grid.Column="0" x:Name="gridTenBaiHat"/>
                     <Grid Grid.Column="1" x:Name="gridTheLoai"/>
-                    <Grid Grid.Column="2" x:Name="gridTrangThai"/>
                 </Grid>
 
                 <ListView x:Name="listViewThanhCa" Background="Transparent" BorderThickness="0" AlternationCount="2"
@@ -249,7 +247,7 @@
                             </GridViewColumn>
                             <GridViewColumn Header="Thể loại" 
                                             Width="{Binding ElementName=gridTheLoai, Path=ActualWidth}" 
-                                            HeaderContainerStyle="{StaticResource MDTLMaterialDesignGridViewColumnHeader}">                                
+                                            HeaderContainerStyle="{StaticResource MDTLMaterialDesignGridViewColumnHeader}">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
                                         <Border BorderBrush="WhiteSmoke" BorderThickness="0,0,1,0">
@@ -257,111 +255,6 @@
                                                        HorizontalAlignment="Center" Foreground="WhiteSmoke"
                                                        FontFamily="{DynamicResource RobotoMedium}" FontSize="12"/>
                                         </Border>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Trạng thái" 
-                                            Width="{Binding ElementName=gridTrangThai, Path=ActualWidth}" 
-                                            HeaderContainerStyle="{StaticResource MDTLMaterialDesignGridViewColumnHeader}">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Grid>
-                                            <Button x:Name="btnXem" Tag="{Binding Id}"
-                                                    Visibility="{Binding TrangThai, Converter={StaticResource BoolToVisibilityConverter}}"
-                                                    VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                    FontFamily="{DynamicResource RobotoMedium}" FontSize="12" Click="btnXem_Click">
-                                                <Hyperlink>
-                                                    <Hyperlink.Style>
-                                                        <Style TargetType="Hyperlink">
-                                                            <Setter Property="Foreground" Value="WhiteSmoke"/>
-                                                            <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
-                                                            <Style.Triggers>
-                                                                <Trigger Property="IsMouseOver" Value="true">
-                                                                    <Setter Property="Foreground">
-                                                                        <Setter.Value>
-                                                                            <SolidColorBrush Color="{StaticResource MDTLBrown}">
-                                                                            </SolidColorBrush>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </Trigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Hyperlink.Style>
-                                                    Xem
-                                                </Hyperlink>
-                                                <Button.Style>
-                                                    <Style TargetType="Button">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="Button">
-                                                                    <Border Padding="5,0,5,0">
-                                                                        <TextBlock><ContentPresenter /></TextBlock>
-                                                                    </Border>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter Property="Foreground" Value="WhiteSmoke" />
-                                                        <Style.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="true">
-                                                                <Setter Property="Foreground">
-                                                                    <Setter.Value>
-                                                                        <SolidColorBrush Color="{StaticResource MDTLBrown}"></SolidColorBrush>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Trigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Button.Style>
-                                            </Button>
-                                            <Button x:Name="btnTaiVe" Tag="{Binding Id}"
-                                                        Visibility="{Binding TrangThai, Converter={StaticResource BoolToHiddenConverter}}"
-                                                        VerticalAlignment="Center" HorizontalAlignment="Center"
-                                                        FontFamily="{DynamicResource RobotoMedium}"
-                                                        FontSize="12" Click="btnTaiVe_Click">
-                                                <Hyperlink>
-                                                    <Hyperlink.Style>
-                                                        <Style TargetType="Hyperlink">
-                                                            <Setter Property="Foreground" Value="WhiteSmoke"/>
-                                                            <Setter Property="TextBlock.TextDecorations" Value="{x:Null}" />
-                                                            <Style.Triggers>
-                                                                <Trigger Property="IsMouseOver" Value="true">
-                                                                    <Setter Property="Foreground">
-                                                                        <Setter.Value>
-                                                                            <SolidColorBrush Color="{StaticResource MDTLBrown}">
-                                                                            </SolidColorBrush>
-                                                                        </Setter.Value>
-                                                                    </Setter>
-                                                                </Trigger>
-                                                            </Style.Triggers>
-                                                        </Style>
-                                                    </Hyperlink.Style>
-                                                    Tải về
-                                                </Hyperlink>
-                                                <Button.Style>
-                                                    <Style TargetType="Button">
-                                                        <Setter Property="Template">
-                                                            <Setter.Value>
-                                                                <ControlTemplate TargetType="Button">
-                                                                    <Border Padding="5,0,5,0">
-                                                                        <TextBlock><ContentPresenter /></TextBlock>
-                                                                    </Border>
-                                                                </ControlTemplate>
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                        <Setter Property="Foreground" Value="WhiteSmoke" />
-                                                        <Style.Triggers>
-                                                            <Trigger Property="IsMouseOver" Value="true">
-                                                                <Setter Property="Foreground">
-                                                                    <Setter.Value>
-                                                                        <SolidColorBrush Color="{StaticResource MDTLBrown}"></SolidColorBrush>
-                                                                    </Setter.Value>
-                                                                </Setter>
-                                                            </Trigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Button.Style>
-                                            </Button>
-                                        </Grid>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -398,50 +291,44 @@
                                Padding="10" LineHeight="20" FontSize="12"/>
                 </ScrollViewer>
                 <Button x:Name="btnTaiPPTX169" Grid.Row="2" Grid.Column="0"
-                        Style="{StaticResource MDTLButton}" Click="btnTaiVe_Click">
-                    <TextBlock x:Name="tbxTaiPPTX169" Foreground="WhiteSmoke"
-                                   FontFamily="{DynamicResource RobotoRegular}" 
-                                   FontSize="13" FontWeight="Bold" TextAlignment="Center"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                   TextWrapping="Wrap" Text="Tải PPTX 16:9"/>
+                        Style="{StaticResource MDTLButtonBrown}" Click="btnTaiVe_Click">
+                    <TextBlock x:Name="tbxTaiPPTX169"
+                               FontFamily="{DynamicResource RobotoRegular}"
+                               FontSize="13" FontWeight="Bold" TextAlignment="Center"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               TextWrapping="Wrap" Text="Tải PPTX 16:9"/>
                 </Button>
                 <Button x:Name="btnTaiPPTX43" Grid.Row="2" Grid.Column="1"
-                            Style="{StaticResource MDTLButton}" Click="btnTaiVe_Click">
+                            Style="{StaticResource MDTLButtonBrown}" Click="btnTaiVe_Click">
                     <TextBlock x:Name="tbxTaiPPTX43"
-                                   Foreground="WhiteSmoke"
-                                   FontFamily="{DynamicResource RobotoRegular}" 
-                                   FontSize="13" FontWeight="Bold" TextAlignment="Center"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                   TextWrapping="Wrap" Text="Tải PPTX 4:3"/>
+                               FontFamily="{DynamicResource RobotoRegular}"
+                               FontSize="13" FontWeight="Bold" TextAlignment="Center"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               TextWrapping="Wrap" Text="Tải PPTX 4:3"/>
                 </Button>
                 <Button x:Name="btnTaiTXT" Grid.Row="2" Grid.Column="2"
-                            Style="{StaticResource MDTLButton}" Click="btnTaiVe_Click">
+                            Style="{StaticResource MDTLButtonBrown}" Click="btnTaiVe_Click">
                     <TextBlock x:Name="tbxTaiTXT"
-                                   Foreground="WhiteSmoke"
-                                   FontFamily="{DynamicResource RobotoRegular}" 
-                                   FontSize="13" FontWeight="Bold" TextAlignment="Center"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                   TextWrapping="Wrap" Text="Tải TXT"/>
+                               FontFamily="{DynamicResource RobotoRegular}"
+                               FontSize="13" FontWeight="Bold" TextAlignment="Center"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               TextWrapping="Wrap" Text="Tải TXT"/>
                 </Button>
                 <Button x:Name="btnTaiPDF" Grid.Row="2" Grid.Column="3"
-                            Style="{StaticResource MDTLButton}" Click="btnTaiVe_Click">
+                            Style="{StaticResource MDTLButtonBrown}" Click="btnTaiVe_Click">
                     <TextBlock x:Name="tbxTaiPDF"
-                                   Foreground="WhiteSmoke"
-                                   FontFamily="{DynamicResource RobotoRegular}" 
-                                   FontSize="13" FontWeight="Bold" TextAlignment="Center"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                   TextWrapping="Wrap" Text="Tải PDF"/>
+                               FontFamily="{DynamicResource RobotoRegular}"
+                               FontSize="13" FontWeight="Bold" TextAlignment="Center"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               TextWrapping="Wrap" Text="Tải PDF"/>
                 </Button>
                 <Button x:Name="btnBaoLoi" Grid.Row="2" Grid.Column="4"
-                            Style="{StaticResource MDTLButton}" Click="btnBaoLoi_Click">
+                            Style="{StaticResource MDTLButtonBrownRevert}" Click="btnBaoLoi_Click">
                     <TextBlock x:Name="tbxBaoLoi"
-                                   FontFamily="{DynamicResource RobotoRegular}"
-                                   FontSize="13" FontWeight="Bold" TextAlignment="Center"
-                                   VerticalAlignment="Center" HorizontalAlignment="Center" 
-                                   TextWrapping="Wrap" Text="Báo Lỗi">
-                        <TextBlock.Foreground>
-                            <SolidColorBrush Color="{StaticResource MDTLBrown}"></SolidColorBrush>
-                        </TextBlock.Foreground>
+                               FontFamily="{DynamicResource RobotoRegular}"
+                               FontSize="13" FontWeight="Bold" TextAlignment="Center"
+                               VerticalAlignment="Center" HorizontalAlignment="Center"
+                               TextWrapping="Wrap" Text="Báo Lỗi">
                     </TextBlock>
                 </Button>
             </Grid>

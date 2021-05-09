@@ -174,7 +174,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\MDTLBaseUserControl.cs" />
     <Compile Include="Controls\TaoTrinhChieu\TaoTrinhChieuViewModel.cs" />
     <Compile Include="Controls\TaoTrinhChieu\ucTabTuTaoTrinhChieu.xaml.cs">
       <DependentUpon>ucTabTuTaoTrinhChieu.xaml</DependentUpon>

@@ -51,8 +51,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border x:Name="border" Background="{TemplateBinding Background}" 
-                            Margin="2 5" Padding="0"
-                            BorderThickness="0,0,0,0" BorderBrush="#424242">
+                            Padding="0" BorderThickness="0,0,0,0" BorderBrush="#424242">
                         <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </Border>
                 </ControlTemplate>
@@ -113,6 +112,87 @@
                             BorderThickness="0,0,0,0" 
                             BorderBrush="#424242">
                         <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="true">
+                            <Setter TargetName="border"
+                                    Property="Background" >
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource MDTLDarkGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{StaticResource MDTLDarkGray}"></SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style x:Key="MDTLButtonBrown" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" >
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Background" >
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource MDTLBrown}"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" 
+                            Margin="2 5" Padding="0"
+                            BorderThickness="0,0,0,0" BorderBrush="#424242">
+                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <SolidColorBrush Color="{StaticResource MDTLDarkGray}"></SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Foreground" >
+                    <Setter.Value>
+                        <SolidColorBrush Color="WhiteSmoke"></SolidColorBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="MDTLButtonBrownRevert" TargetType="{x:Type Button}">
+        <Setter Property="Background" >
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" >
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource MDTLBrown}"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border x:Name="border" Background="{TemplateBinding Background}" 
+                            Margin="2 5" Padding="0"
+                            BorderThickness="1" 
+                            BorderBrush="#FFAD9579">
+                        <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
