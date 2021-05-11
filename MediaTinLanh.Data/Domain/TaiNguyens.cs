@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MediaTinLanh.Data
 {
-    public partial class BanDichCau : Entity<BanDichCau>
+    public partial class TaiNguyen : Entity<TaiNguyen>
     {
     }
 }

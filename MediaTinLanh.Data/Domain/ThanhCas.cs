@@ -10,6 +10,5 @@ namespace MediaTinLanh.Data
     {
         public LoaiBaiHat LoaiThanhCa { get; set; }
         public List<LoiBaiHat> DanhSachLoiBaiHat { get; set; }
-        public List<Media> DanhSachMedia { get; set; }
     }
 }

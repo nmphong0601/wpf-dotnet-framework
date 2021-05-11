@@ -25,8 +25,12 @@ namespace MediaTinLanh.Model
         private int? _soCau;
         private int? _loai;
         private string _trangThai;
-        private string _tenTep;
-        private string _duongDan;
+        private string _ghiChu;
+        private string _pptx;
+        private string _pro;
+        private string _txt;
+        private string _pdf;
+        private DateTime? _ngayCapNhat;
 
         public int? ID { get; set; }
         public int? STT {
@@ -110,45 +114,111 @@ namespace MediaTinLanh.Model
                 OnPropertyChanged("TrangThai");
             }
         }
-        public string TenTep
+        public string GhiChu
         {
             get
             {
-                return _tenTep;
+                return _ghiChu;
             }
 
             set
             {
-                if (value == _tenTep)
+                if (value == _ghiChu)
                 {
                     return;
                 }
-                _tenTep = value;
-                OnPropertyChanged("TenTep");
+                _ghiChu = value;
+                OnPropertyChanged("GhiChu");
             }
         }
-        public string DuongDan
+        public string PPTX
         {
             get
             {
-                return _duongDan;
+                return _pptx;
             }
 
             set
             {
-                if (value == _duongDan)
+                if (value == _pptx)
                 {
                     return;
                 }
-                _duongDan = value;
-                OnPropertyChanged("DuongDan");
+                _pptx = value;
+                OnPropertyChanged("PPTX");
+            }
+        }
+        public string PRO
+        {
+            get
+            {
+                return _pro;
+            }
+
+            set
+            {
+                if (value == _pro)
+                {
+                    return;
+                }
+                _pro = value;
+                OnPropertyChanged("PRO");
+            }
+        }
+        public string TXT
+        {
+            get
+            {
+                return _txt;
+            }
+
+            set
+            {
+                if (value == _txt)
+                {
+                    return;
+                }
+                _txt = value;
+                OnPropertyChanged("TXT");
+            }
+        }
+        public string PDF
+        {
+            get
+            {
+                return _pdf;
+            }
+
+            set
+            {
+                if (value == _pdf)
+                {
+                    return;
+                }
+                _pdf = value;
+                OnPropertyChanged("PDF");
+            }
+        }
+        public DateTime? NgayCapNhat
+        {
+            get
+            {
+                return _ngayCapNhat;
+            }
+
+            set
+            {
+                if (value == _ngayCapNhat)
+                {
+                    return;
+                }
+                _ngayCapNhat = value;
+                OnPropertyChanged("NgayCapNhat");
             }
         }
 
         private LoaiBaiHatModel _loaiThanhCa;
-
         private ObservableCollection<LoiBaiHatModel> _loiBaiHats;
-        private ObservableCollection<MediaModel> _medias;
 
         public LoaiBaiHatModel LoaiThanhCa
         {
@@ -182,24 +252,6 @@ namespace MediaTinLanh.Model
                 }
                 _loiBaiHats = value;
                 OnPropertyChanged("LoiBaiHats");
-            }
-        }
-
-        public ObservableCollection<MediaModel> Medias
-        {
-            get
-            {
-                return _medias;
-            }
-
-            set
-            {
-                if (value == _medias)
-                {
-                    return;
-                }
-                _medias = value;
-                OnPropertyChanged("Medias");
             }
         }
     }

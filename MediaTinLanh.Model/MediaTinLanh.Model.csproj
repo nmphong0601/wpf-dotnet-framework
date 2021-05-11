@@ -58,27 +58,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MediaThanhCaModel.cs" />
-    <Compile Include="ChuDeModel.cs" />
-    <Compile Include="GopYPhanMemModel.cs" />
-    <Compile Include="MediaTypeModel.cs" />
     <Compile Include="PhienBanModel.cs" />
-    <Compile Include="BanDichPhienBanModel.cs" />
-    <Compile Include="BoDeModel.cs" />
-    <Compile Include="BanDichCauModel.cs" />
-    <Compile Include="BanDichSachModel.cs" />
-    <Compile Include="DapAnModel.cs" />
     <Compile Include="LoaiBaiHatModel.cs" />
-    <Compile Include="CauHoiModel.cs" />
-    <Compile Include="CauDoModel.cs" />
     <Compile Include="TemplateModel.cs" />
     <Compile Include="LoiBaiHatModel.cs" />
     <Compile Include="ThanhCaModel.cs" />
-    <Compile Include="MediaModel.cs" />
-    <Compile Include="CauKinhThanhModel.cs" />
     <Compile Include="SachModel.cs" />
-    <Compile Include="NgonNguModel.cs" />
-    <Compile Include="Model_Sach.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

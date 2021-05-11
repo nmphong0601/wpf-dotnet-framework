@@ -19,7 +19,7 @@ namespace MediaTinLanh.Control
         public const String Key = "JHT@MDTL!12723WWXDE";
         public const String passPhrase = "1.ppYmr5*9736GQ";
         private const Int32 KEY_SIZE = 256;
-       
+
         //Get username, password and serer
         public static bool GET_FTP()
         {
@@ -46,7 +46,7 @@ namespace MediaTinLanh.Control
                 else
                     return true;
 
-                
+
             }
             catch (Exception)
             {
