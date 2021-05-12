@@ -125,7 +125,7 @@ namespace MediaTinLanh.Control
         {
             if(Control_Security.GET_FTP())
             {
-                string ftpfullpath = "ftp://" + Control_Security.FTP_Server + "//" + FilePathOnRemote;
+                string ftpfullpath = "ftp://" + Control_Security.FTP_Server + "/" + FilePathOnRemote;
 
                 using (WebClient request = new WebClient())
                 {

@@ -17,9 +17,9 @@ namespace MediaTinLanh.Control
 
         public static String DatabaseName = "";
         public const String Key = "JHT@MDTL!12723WWXDE";
-        public const String passPhrase = "1.ppYmr5*9736GQ";
+        private const string passPhrase = "1.ppYmr5*9736GQ";
         private const Int32 KEY_SIZE = 256;
-
+       
         //Get username, password and serer
         public static bool GET_FTP()
         {
@@ -46,7 +46,7 @@ namespace MediaTinLanh.Control
                 else
                     return true;
 
-
+                
             }
             catch (Exception)
             {
@@ -54,7 +54,7 @@ namespace MediaTinLanh.Control
             }
 
         }
-        public String Encrypt(String plainText)
+        public String Decrypt(String plainText)
         {
             bool useHashing = true;
             byte[] keyArray;
@@ -79,7 +79,7 @@ namespace MediaTinLanh.Control
             return UTF8Encoding.UTF8.GetString(resultArray);
         }
 
-        public String Decrypt(String cipherText)
+        public String Encrypt (String cipherText)
         {
             bool useHashing = true;
             byte[] keyArray;

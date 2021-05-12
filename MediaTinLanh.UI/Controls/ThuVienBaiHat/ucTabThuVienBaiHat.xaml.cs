@@ -98,7 +98,7 @@ namespace MediaTinLanh.UI.Controls
                                         + "-169" + fileName.Substring(fileName.LastIndexOf("."), fileName.Length - fileName.LastIndexOf("."));
 
                         inputfilepath = browseFilePath() + "\\" + fileName169;
-                        filePathOnRemote = selectedThanhCa.PPTX;
+                        filePathOnRemote = selectedThanhCa.PPTX.Contains("/data/") ? selectedThanhCa.PPTX.Replace("/data/", "") : selectedThanhCa.PPTX;
 
                         //Hiện circle waiting
                         grdWaiting.Visibility = Visibility.Visible;

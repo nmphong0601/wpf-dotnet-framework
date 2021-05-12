@@ -81,7 +81,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" FontFamily="{StaticResource RobotoRegular}" 
                            Foreground="WhiteSmoke" Text="Lời bài hát:" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="1"
+                <TextBox Grid.Row="1" TextAlignment="Left"
                          Text="{Binding NoiDungNhap, UpdateSourceTrigger=PropertyChanged}"
                          TextChanged="TextBox_TextChanged" FontFamily="{StaticResource RobotoRegular}"
                          TextWrapping="WrapWithOverflow" AcceptsReturn="True" Padding="10"
@@ -101,7 +101,11 @@
                         </Style>
                     </TextBox.Style>
                 </TextBox>
-                
+                <!--<TextBox Grid.Row="1" Height="20" Margin="5" TextWrapping="Wrap"
+                         Text="{Binding NoiDungNhap, UpdateSourceTrigger=PropertyChanged}"
+                         FontFamily="{StaticResource RobotoRegular}"
+                         Foreground="WhiteSmoke" Style="{StaticResource DashedTextBoxStyle}">
+                </TextBox>-->
             </Grid>
         </DockPanel>
         <DockPanel Grid.Row="0" Grid.Column="2">
@@ -113,16 +117,18 @@
                 <DockPanel Grid.Column="0" x:Name="slidesList">
                     <Image Name="CurrentSlide"></Image>
                 </DockPanel>
-                <ListView Grid.Column="1" Name="SlidesListView">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel>
-                                <Image Width="300px" Source="{Binding}">
-                                </Image>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                <Viewbox Grid.Column="1" Stretch="Uniform" StretchDirection="DownOnly">
+                    <ListView x:Name="SlidesListView">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Image Source="{Binding}" HorizontalAlignment="Stretch" Margin="15">
+                                    </Image>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Viewbox>
             </Grid>
         </DockPanel>
         <DockPanel Grid.Row="1" Grid.ColumnSpan="3">
@@ -132,7 +138,7 @@
                     <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
 
-                <DockPanel Grid.Column="0">
+                <DockPanel Grid.Column="0" Margin="5">
                     <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Top">
                         Lựa chọn mẫu Powerpoint định dạng 16:9
                     </TextBlock>
@@ -145,27 +151,31 @@
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <fa:FontAwesome Grid.Column="0" 
-                            Icon="AngleLeft" 
+                        <Viewbox Grid.Column="0" Stretch="Uniform" StretchDirection="DownOnly">
+                            <fa:FontAwesome  
+                            Icon="AngleLeft"
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Center"
                             FontSize="150"
                             Foreground="{StaticResource IconColor}"/>
+                        </Viewbox>
                         <Image Grid.Column="1"
                             Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-169.png" />
                         <Image Grid.Column="2"
                             Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-169.png" />
                         <Image Grid.Column="3"
                             Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-169.png" />
-                        <fa:FontAwesome Grid.Column="4" 
+                        <Viewbox Grid.Column="4" Stretch="Uniform" StretchDirection="DownOnly">
+                            <fa:FontAwesome  
                             Icon="AngleRight" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Center"
                             FontSize="150"
                             Foreground="{StaticResource IconColor}"/>
+                        </Viewbox>
                     </Grid>
                 </DockPanel>
-                <DockPanel Grid.Column="1">
+                <DockPanel Grid.Column="1" Margin="5">
                     <TextBlock HorizontalAlignment="Center" DockPanel.Dock="Top">
                         Lựa chọn mẫu Powerpoint định dạng 4:3
                     </TextBlock>
@@ -177,24 +187,28 @@
                             <ColumnDefinition Width="2*" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <fa:FontAwesome Grid.Column="0" 
+                        <Viewbox Grid.Column="0" Stretch="Uniform" StretchDirection="DownOnly">
+                            <fa:FontAwesome 
                             Icon="AngleLeft" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Center"
                             FontSize="150"
                             Foreground="{StaticResource IconColor}"/>
+                        </Viewbox>
                         <Image Grid.Column="1"
                             Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-43.png" />
                         <Image Grid.Column="2"
                             Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-43.png" />
                         <Image Grid.Column="3"
                             Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-43.png" />
-                        <fa:FontAwesome Grid.Column="4" 
+                        <Viewbox Grid.Column="4" Stretch="Uniform" StretchDirection="DownOnly">
+                            <fa:FontAwesome 
                             Icon="AngleRight" 
                             VerticalAlignment="Center" 
                             HorizontalAlignment="Center"
                             FontSize="150"
                             Foreground="{StaticResource IconColor}"/>
+                        </Viewbox>
                     </Grid>
                 </DockPanel>
             </Grid>
