@@ -81,7 +81,6 @@ namespace MediaTinLanh.UI.Controls
             CheckBox checkBox = sender as CheckBox;
             ThanhCaViewModel dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
             LoaiBaiHatModel unSelectedLoaiThanhCa = dbThanhCa.SelectedLoaiBaiHats.Single(x => x.ID == int.Parse(checkBox.Uid));
-            //Mapper.Map<LoaiBaiHat, LoaiBaiHatModel>(dbContext.LoaiBaiHats.Single(int.Parse(checkBox.Uid)))
 
             dbThanhCa.SelectedLoaiBaiHats.Remove(unSelectedLoaiThanhCa);
 
