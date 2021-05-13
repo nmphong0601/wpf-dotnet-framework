@@ -155,10 +155,10 @@
                             <ColumnDefinition Width="20*"/>
                             <ColumnDefinition Width="80*"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="ckbThanhCa" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
+                        <CheckBox x:Name="ckbThanhCa" x:Uid="1" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
                                       IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                      BorderBrush="White" BorderThickness="1" Checked="ckbThanhCa_Checked">
+                                      BorderBrush="White" BorderThickness="1" Checked="ckbLoaiThanhCa_Checked" Unchecked="ckbLoaiThanhCa_Unchecked">
                         </CheckBox>
                         <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Left">
                             <TextBlock Text="Thánh Ca" HorizontalAlignment="Stretch" FontWeight="Bold"
@@ -170,12 +170,12 @@
                             <ColumnDefinition Width="15*"/>
                             <ColumnDefinition Width="85*"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="ckbTVCHH" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
+                        <CheckBox x:Name="ckbTVCHH" x:Uid="2" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
                                       IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                      BorderBrush="White" BorderThickness="1">
+                                      BorderBrush="White" BorderThickness="1" Checked="ckbLoaiThanhCa_Checked" Unchecked="ckbLoaiThanhCa_Unchecked">
                         </CheckBox>
-                        <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
+                        <Viewbox Grid.Column="1" x:Uid="3" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
                             <TextBlock Text="Tôn Vinh Chúa Hằng Hữu" HorizontalAlignment="Stretch" FontWeight="Bold"
                                        Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"/>
                         </Viewbox>
@@ -185,10 +185,10 @@
                             <ColumnDefinition Width="20*"/>
                             <ColumnDefinition Width="80*"/>
                         </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="ckbBietThanhCa" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
+                        <CheckBox x:Name="ckbBietThanhCa" x:Uid="4" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
                                       IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                      BorderBrush="White" BorderThickness="1">
+                                      BorderBrush="White" BorderThickness="1" Checked="ckbLoaiThanhCa_Checked" Unchecked="ckbLoaiThanhCa_Unchecked">
                         </CheckBox>
                         <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
                             <TextBlock Text="Biệt Thánh Ca" HorizontalAlignment="Stretch" FontWeight="Bold"
@@ -203,7 +203,7 @@
                         <CheckBox x:Name="ckbKinhThanhDoiDap" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
                                       HorizontalAlignment="Center" VerticalAlignment="Center"
                                       IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                      BorderBrush="White" BorderThickness="1">
+                                      BorderBrush="White" BorderThickness="1" Checked="ckbLoaiThanhCa_Checked" Unchecked="ckbLoaiThanhCa_Unchecked">
                         </CheckBox>
                         <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
                             <TextBlock Text="Kinh Thánh Đối Đáp" HorizontalAlignment="Stretch" FontWeight="Bold"

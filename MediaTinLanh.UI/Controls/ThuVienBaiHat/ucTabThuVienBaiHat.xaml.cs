@@ -30,9 +30,6 @@ namespace MediaTinLanh.UI.Controls
 
             var danhSachLoaiThanhCa = Mapper.Map<IEnumerable<LoaiBaiHat>, IEnumerable<LoaiBaiHatModel>>(dbContext.LoaiBaiHats.All());
 
-            //listBoxLoaiThanhCa.ItemsSource = danhSachLoaiThanhCa;
-            //listBoxLoaiThanhCa.SelectedItem = danhSachLoaiThanhCa.ToList()[0];
-
             var dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
             var listThanhCaModel = Mapper.Map<IEnumerable<ThanhCa>, IEnumerable<ThanhCaModel>>(dbContext.ThanhCas.All(orderBy: "STT ASC").ToList());
             dbThanhCa.Items = new ObservableCollection<ThanhCaModel>(listThanhCaModel);
@@ -42,39 +39,61 @@ namespace MediaTinLanh.UI.Controls
         {
             var dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
 
-            LoaiBaiHatModel selectedLoaiThanhCa = dbThanhCa.SelectedLoaiBaiHat;
-            var listThanhCaModel = Mapper.Map<IEnumerable<ThanhCa>, IEnumerable<ThanhCaModel>>(dbContext.ThanhCas.All(where: "Ten COLLATE UTF8CI LIKE '%" + txtTimBaiHat.Text + "%'").ToList());
-            if (selectedLoaiThanhCa != null)
+            var filterTenThanhCa = !string.IsNullOrEmpty(txtTimBaiHat.Text) ? $"Ten COLLATE UTF8CI LIKE {"'%" + txtTimBaiHat.Text + "%'"}" : "";
+            var filterLoaiThanhCa = "";
+            if (dbThanhCa.SelectedLoaiBaiHats.Count() != 0)
             {
-                listThanhCaModel = Mapper.Map<IEnumerable<ThanhCa>, IEnumerable<ThanhCaModel>>(dbContext.ThanhCas.All(where: "Loai = @0 AND Ten COLLATE UTF8CI LIKE '%" + txtTimBaiHat.Text + "%'", parms: new object[] { selectedLoaiThanhCa.ID }).ToList());
+                filterLoaiThanhCa += !string.IsNullOrEmpty(filterTenThanhCa) ? " AND " : "";
+                filterLoaiThanhCa += "( Loai = " + string.Join(" OR Loai = ", dbThanhCa.SelectedLoaiBaiHats.Select(x => x.ID)) + ")";
             }
+
+            var listThanhCa = dbContext.ThanhCas.All(where: filterTenThanhCa + filterLoaiThanhCa, orderBy: "STT ASC");
+            var listThanhCaModel = Mapper.Map<List<ThanhCa>, List<ThanhCaModel>>(listThanhCa.ToList());
 
             dbThanhCa.Items = new ObservableCollection<ThanhCaModel>(listThanhCaModel);
         }
 
-        private void ckbThanhCa_Checked(object sender, RoutedEventArgs e)
-        {
-            var dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
-
-            LoaiBaiHatModel selectedLoaiThanhCa = Mapper.Map<LoaiBaiHat, LoaiBaiHatModel>(dbContext.LoaiBaiHats.Single(1));
-
-            dbThanhCa.SelectedLoaiBaiHat = selectedLoaiThanhCa;
-        }
-
         private void ckbLoaiThanhCa_Checked(object sender, RoutedEventArgs e)
         {
-            //LoaiBaiHatModel selectedLoaiThanhCa = (LoaiBaiHatModel)listBoxLoaiThanhCa.SelectedItem;
-            LoaiBaiHatModel selectedLoaiThanhCa = Mapper.Map<LoaiBaiHat, LoaiBaiHatModel>(dbContext.LoaiBaiHats.Single(1));
+            CheckBox checkBox = sender as CheckBox;
+            ThanhCaViewModel dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
+            
+            var selectedLoaiThanhCa = Mapper.Map<LoaiBaiHat, LoaiBaiHatModel>(dbContext.LoaiBaiHats.Single(int.Parse(checkBox.Uid)));
+            if (dbThanhCa.SelectedLoaiBaiHats.IndexOf(selectedLoaiThanhCa) == -1)
+            {
+                dbThanhCa.SelectedLoaiBaiHats.Add(selectedLoaiThanhCa);
+            }
 
-            var dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
-            var listThanhCaModel = Mapper.Map<IEnumerable<ThanhCa>, IEnumerable<ThanhCaModel>>(dbContext.ThanhCas.All(where: "Loai = @0", parms: new object[] { selectedLoaiThanhCa.ID }).ToList());
+            var filterLoaiThanhCa = "";
+            if (dbThanhCa.SelectedLoaiBaiHats.Count() != 0)
+            {
+                filterLoaiThanhCa += "( Loai = " + string.Join(" OR Loai = ", dbThanhCa.SelectedLoaiBaiHats.Select(x => x.ID)) + ")";
+            }
+            
+            var listThanhCa = dbContext.ThanhCas.All(where: filterLoaiThanhCa, orderBy: "STT ASC");
+            var listThanhCaModel = Mapper.Map<List<ThanhCa>, List<ThanhCaModel>>(listThanhCa.ToList());
+
             dbThanhCa.Items = new ObservableCollection<ThanhCaModel>(listThanhCaModel);
         }
 
         private void ckbLoaiThanhCa_Unchecked(object sender, RoutedEventArgs e)
         {
-            var dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
-            dbThanhCa.Items = new ObservableCollection<ThanhCaModel>();
+            CheckBox checkBox = sender as CheckBox;
+            ThanhCaViewModel dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
+            LoaiBaiHatModel unSelectedLoaiThanhCa = dbThanhCa.SelectedLoaiBaiHats.Single(x => x.ID == int.Parse(checkBox.Uid));
+            //Mapper.Map<LoaiBaiHat, LoaiBaiHatModel>(dbContext.LoaiBaiHats.Single(int.Parse(checkBox.Uid)))
+
+            dbThanhCa.SelectedLoaiBaiHats.Remove(unSelectedLoaiThanhCa);
+
+            var filterLoaiThanhCa = "";
+            if (dbThanhCa.SelectedLoaiBaiHats.Count() != 0)
+            {
+                filterLoaiThanhCa += "( Loai = " + string.Join(" OR Loai = ", dbThanhCa.SelectedLoaiBaiHats.Select(x => x.ID)) + ")";
+            }
+            var listThanhCa = dbContext.ThanhCas.All(where: filterLoaiThanhCa, orderBy: "STT ASC");
+            var listThanhCaModel = Mapper.Map<List<ThanhCa>, List<ThanhCaModel>>(listThanhCa.ToList());
+
+            dbThanhCa.Items = new ObservableCollection<ThanhCaModel>(listThanhCaModel);
         }
 
         private void btnTaiVe_Click(object sender, RoutedEventArgs e)

@@ -23,24 +23,43 @@ namespace MediaTinLanh.UI.ViewModels
             }
         }
 
-        private LoaiBaiHatModel _selectedLoaiBaiHat;
-        public LoaiBaiHatModel SelectedLoaiBaiHat
+        private ObservableCollection<LoaiBaiHatModel> _selectedLoaiBaiHats;
+        public ObservableCollection<LoaiBaiHatModel> SelectedLoaiBaiHats
         {
             get
             {
-                return _selectedLoaiBaiHat;
+                return _selectedLoaiBaiHats;
             }
 
             set
             {
-                if (value == _selectedLoaiBaiHat)
+                if (value == _selectedLoaiBaiHats)
                 {
                     return;
                 }
-                _selectedLoaiBaiHat = value;
-                OnPropertyChanged("SelectedLoaiBaiHat");
+                _selectedLoaiBaiHats = value;
+                OnPropertyChanged("SelectedLoaiBaiHats");
             }
         }
+
+        //private LoaiBaiHatModel _selectedLoaiBaiHat;
+        //public LoaiBaiHatModel SelectedLoaiBaiHat
+        //{
+        //    get
+        //    {
+        //        return _selectedLoaiBaiHat;
+        //    }
+
+        //    set
+        //    {
+        //        if (value == _selectedLoaiBaiHat)
+        //        {
+        //            return;
+        //        }
+        //        _selectedLoaiBaiHat = value;
+        //        OnPropertyChanged("SelectedLoaiBaiHat");
+        //    }
+        //}
 
         private ThanhCaModel _selectedIitem;
         public ThanhCaModel SelectedItem
@@ -83,6 +102,7 @@ namespace MediaTinLanh.UI.ViewModels
         public ThanhCaViewModel()
         {
             Items = new ObservableCollection<ThanhCaModel>();
+            SelectedLoaiBaiHats = new ObservableCollection<LoaiBaiHatModel>();
         }
 
         public ThanhCaModel FindItem(int thanhCaId)
