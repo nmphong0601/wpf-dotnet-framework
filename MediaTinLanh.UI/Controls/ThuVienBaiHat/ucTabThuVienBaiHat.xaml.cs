@@ -128,7 +128,7 @@ namespace MediaTinLanh.UI.Controls
                                         + "-43" + fileName.Substring(fileName.LastIndexOf("."), fileName.Length - fileName.LastIndexOf("."));
 
                         inputfilepath = browseFilePath() + "\\" + fileName43;
-                        filePathOnRemote = selectedThanhCa.PPTX;
+                        filePathOnRemote = selectedThanhCa.PPTX.Contains("/data/") ? selectedThanhCa.PPTX.Replace("/data/", "") : selectedThanhCa.PPTX;
 
                         //Hiện circle waiting
                         grdWaiting.Visibility = Visibility.Visible;
@@ -153,10 +153,10 @@ namespace MediaTinLanh.UI.Controls
 
                         break;
                     case "btnTaiTXT":
-                        fileName = selectedThanhCa.TXT.Remove(0, selectedThanhCa.PPTX.LastIndexOf("/") + 1).Replace(" ", string.Empty);
+                        fileName = selectedThanhCa.TXT.Remove(0, selectedThanhCa.TXT.LastIndexOf("/") + 1).Replace(" ", string.Empty);
 
                         inputfilepath = browseFilePath() + "\\" + fileName;
-                        filePathOnRemote = selectedThanhCa.TXT;
+                        filePathOnRemote = selectedThanhCa.TXT.Contains("/data/") ? selectedThanhCa.TXT.Replace("/data/", "") : selectedThanhCa.TXT;
 
                         //Hiện circle waiting
                         grdWaiting.Visibility = Visibility.Visible;
@@ -179,10 +179,10 @@ namespace MediaTinLanh.UI.Controls
 
                         break;
                     case "btnTaiPDF":
-                        fileName = selectedThanhCa.TXT.Remove(0, selectedThanhCa.PDF.LastIndexOf("/") + 1).Replace(" ", string.Empty);
+                        fileName = selectedThanhCa.PDF.Remove(0, selectedThanhCa.PDF.LastIndexOf("/") + 1).Replace(" ", string.Empty);
 
                         inputfilepath = browseFilePath() + "\\" + fileName;
-                        filePathOnRemote = selectedThanhCa.PDF;
+                        filePathOnRemote = selectedThanhCa.PDF.Contains("/data/") ? selectedThanhCa.PDF.Replace("/data/", "") : selectedThanhCa.PDF;
 
                         //Hiện circle waiting
                         grdWaiting.Visibility = Visibility.Visible;
@@ -195,6 +195,8 @@ namespace MediaTinLanh.UI.Controls
                             {
                                 Control_FTP.Download_files(inputfilepath, filePathOnRemote);
                             }
+
+                            Process.Start(inputfilepath);
 
                         }).ContinueWith(Task =>
                         {
@@ -236,6 +238,8 @@ namespace MediaTinLanh.UI.Controls
                 {
                     p.PageSetup.SlideSize = Microsoft.Office.Interop.PowerPoint.PpSlideSizeType.ppSlideSizeOnScreen16x9;
                 }
+
+                p.Save();
             }
         }
 
