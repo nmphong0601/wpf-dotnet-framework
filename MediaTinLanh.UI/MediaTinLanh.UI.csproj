@@ -91,6 +91,9 @@
       <HintPath>..\packages\MicrosoftOfficeCore.15.0.0\lib\net35\Office.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\PresentationFramework.4.6.0\lib\PresentationFramework.dll</HintPath>
+    </Reference>
     <Reference Include="Spire.Barcode, Version=5.3.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
       <HintPath>..\packages\Spire.Office.6.4.0\lib\net40\Spire.Barcode.dll</HintPath>
     </Reference>
@@ -167,13 +170,15 @@
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\Carousel.xaml.cs">
+      <DependentUpon>Carousel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TaoTrinhChieu\TaoTrinhChieuViewModel.cs" />
     <Compile Include="Controls\TaoTrinhChieu\ucTabTuTaoTrinhChieu.xaml.cs">
       <DependentUpon>ucTabTuTaoTrinhChieu.xaml</DependentUpon>
@@ -185,8 +190,13 @@
       <DependentUpon>ucThanhCa.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Converters.cs" />
+    <Compile Include="ViewModels\ImageViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\ThanhCaViewModel.cs" />
+    <Page Include="Controls\Carousel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\IntroWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -237,6 +247,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Resource Include="Resources\images\main\Layer-30.png" />
     <Resource Include="Resources\images\trinh-chieu\bg.jpg" />
     <Resource Include="Resources\images\main\main background.png" />
     <Resource Include="Resources\images\main\maximize.png" />

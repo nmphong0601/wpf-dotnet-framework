@@ -13,12 +13,36 @@ namespace MediaTinLanh.UI.Controls
 
     public class TaoTrinhChieuViewModel : INotifyPropertyChanged
     {
+        private string _tieuDe;
+        private string _moTa;
         private string _noiDungNhap;
         private List<SlideData> _slides;
 
         public TaoTrinhChieuViewModel()
         {
+            _tieuDe = "Nhập tựa đề";
+            _moTa = "Nhập thông tin Nhạc & lời, thơ, chuyển ngữ, năm sáng tác (nếu có)";
+            _noiDungNhap = "Nhập nội dung";
             _slides = new List<SlideData>();
+        }
+
+        public string TieuDe
+        {
+            get { return _tieuDe; }
+            set
+            {
+                _tieuDe = value;
+                OnPropertyChanged(nameof(TieuDe));
+            }
+        }
+        public string MoTa
+        {
+            get { return _moTa; }
+            set
+            {
+                _moTa = value;
+                OnPropertyChanged(nameof(MoTa));
+            }
         }
 
         public string NoiDungNhap

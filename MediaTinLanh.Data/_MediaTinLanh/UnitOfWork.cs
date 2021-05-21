@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MediaTinLanh.Data._MediaTinLanh
+namespace MediaTinLanh.Data
 {
-    public partial class NDUnitOfWork : UnitOfWork
+    public partial class MDTLUnitOfWork : UnitOfWork
     {
-        public NDUnitOfWork() : base(new MediaTinLanhDb()) { }
+        public MDTLUnitOfWork() : base(new MediaTinLanhDb()) { }
     }
 }

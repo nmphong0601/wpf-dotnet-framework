@@ -6,11 +6,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:MediaTinLanh.UI.Controls"
              xmlns:resources="clr-namespace:MediaTinLanh.UI.Resources"
+             xmlns:vm="clr-namespace:MediaTinLanh.UI.ViewModels"
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
+        <vm:ImageViewModel x:Key="ImageContext"/>
+        
         <resources:MathConverter x:Key="mathConverter"/>
         <resources:MarginConverter x:Key="marginConverter"/>
         <resources:TrangThaiConverter x:Key="TrangThaiConverter"/>
@@ -47,6 +50,77 @@
                 </Trigger>
             </Style.Triggers>
         </Style>
+
+        <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3"/>
+        <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="#FFFFFFFF"/>
+        <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9"/>
+        <Style x:Key="ListBoxStyleCustom" TargetType="{x:Type ListBox}">
+            <Setter Property="Background" Value="{x:Null}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource ListBox.Static.Border}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Viewbox Stretch="Fill" StretchDirection="Both"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <RepeatButton Tag="{Binding ElementName=scrollViewer}"
+                                              Background="{x:Null}" BorderThickness="0"
+                                              Click="Button_Left">
+                                    <fa:FontAwesome Icon="AngleLeft"
+                                                    VerticalAlignment="Center"
+                                                    HorizontalAlignment="Center"
+                                                    Foreground="{StaticResource IconColor}"/>
+                                </RepeatButton>
+                            </Viewbox>
+                            <Border x:Name="Bd" Grid.Column="1" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
+                                <ScrollViewer x:Name="scrollViewer" Focusable="false" Padding="{TemplateBinding Padding}" 
+                                              HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch">
+                                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                </ScrollViewer>
+                            </Border>
+                            <Viewbox Grid.Column="2" Stretch="Fill" StretchDirection="Both"
+                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <RepeatButton Tag="{Binding ElementName=scrollViewer}"
+                                              Background="{x:Null}" BorderThickness="0"
+                                              Click="Button_Right">
+                                    <fa:FontAwesome Icon="AngleRight"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Foreground="{StaticResource IconColor}"/>
+                                </RepeatButton>
+                            </Viewbox>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Background}"/>
+                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Border}"/>
+                            </Trigger>
+                            <MultiTrigger>
+                                <MultiTrigger.Conditions>
+                                    <Condition Property="IsGrouping" Value="true"/>
+                                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
+                                </MultiTrigger.Conditions>
+                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                            </MultiTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <!-- Resource -->
     </UserControl.Resources>
 
@@ -77,11 +151,23 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="10*"/>
-                    <RowDefinition Height="90*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="80*"/>
                 </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" FontFamily="{StaticResource RobotoRegular}" 
-                           Foreground="WhiteSmoke" Text="Lời bài hát:" VerticalAlignment="Center"/>
-                <TextBox Grid.Row="1" TextAlignment="Left"
+                <TextBox x:Name="txtTieuDe" Grid.Row="0" Tag="Nhập tựa đề"
+                         Style="{StaticResource DashedTextBoxStyle}"
+                         Text="{Binding TieuDe, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         FontFamily="{StaticResource RobotoRegular}"
+                         Foreground="WhiteSmoke" TextAlignment="Center"
+                         VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                <TextBox x:Name="txtMoTa" Grid.Row="1" Tag="Nhập thông tin Nhạc &amp; lời, thơ, chuyển ngữ, năm sáng tác (nếu có)"
+                         Style="{StaticResource DashedTextBoxStyle}"
+                         Text="{Binding MoTa, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                         FontFamily="{StaticResource RobotoRegular}" 
+                         Foreground="WhiteSmoke" TextAlignment="Center"
+                         VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                <TextBox x:Name="txtNoiDung" Grid.Row="2" Tag="Nhập nội dung"
+                         TextAlignment="Left"
                          Text="{Binding NoiDungNhap, UpdateSourceTrigger=PropertyChanged}"
                          TextChanged="TextBox_TextChanged" FontFamily="{StaticResource RobotoRegular}"
                          TextWrapping="WrapWithOverflow" AcceptsReturn="True" Padding="10"
@@ -101,11 +187,6 @@
                         </Style>
                     </TextBox.Style>
                 </TextBox>
-                <!--<TextBox Grid.Row="1" Height="20" Margin="5" TextWrapping="Wrap"
-                         Text="{Binding NoiDungNhap, UpdateSourceTrigger=PropertyChanged}"
-                         FontFamily="{StaticResource RobotoRegular}"
-                         Foreground="WhiteSmoke" Style="{StaticResource DashedTextBoxStyle}">
-                </TextBox>-->
             </Grid>
         </DockPanel>
         <DockPanel Grid.Row="0" Grid.Column="2">
@@ -145,33 +226,60 @@
                     <!-- list hình 16:9 -->
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="20*" />
+                            <ColumnDefinition Width="20*" />
+                            <ColumnDefinition Width="20*" />
+                            <ColumnDefinition Width="10*" />
                         </Grid.ColumnDefinitions>
-                        <Viewbox Grid.Column="0" Stretch="Uniform" StretchDirection="DownOnly">
-                            <fa:FontAwesome  
-                            Icon="AngleLeft"
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            FontSize="150"
-                            Foreground="{StaticResource IconColor}"/>
+                        <Viewbox Grid.Column="0" Stretch="Fill" StretchDirection="Both" Panel.ZIndex="1"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <RepeatButton x:Name="LeftButton" 
+                                          Background="{x:Null}" BorderThickness="0"
+                                          Click="LeftButton_Click">
+                                <fa:FontAwesome Icon="AngleLeft"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Foreground="{StaticResource IconColor}"/>
+                            </RepeatButton>
                         </Viewbox>
-                        <Image Grid.Column="1"
-                            Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-169.png" />
-                        <Image Grid.Column="2"
-                            Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-169.png" />
-                        <Image Grid.Column="3"
-                            Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-169.png" />
-                        <Viewbox Grid.Column="4" Stretch="Uniform" StretchDirection="DownOnly">
-                            <fa:FontAwesome  
-                            Icon="AngleRight" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            FontSize="150"
-                            Foreground="{StaticResource IconColor}"/>
+                        <Grid Grid.Column="1" Grid.ColumnSpan="3">
+                            <ScrollViewer x:Name="HorizontalScroller" 
+                                          Style="{StaticResource MDTLHorizontalScrollViewer}"
+                                          VerticalScrollBarVisibility="Disabled"
+                                          HorizontalScrollBarVisibility="Hidden"
+                                          CanContentScroll="True"
+                                          Loaded="HorizontalScrollViewer_Loaded"
+                                          SizeChanged="HorizontalScrollViewer_SizeChanged"
+                                          ScrollChanged="HorizontalScrollViewer_ScrollChanged">
+                                <ItemsControl x:Name="tStack" 
+                                              ItemsSource="{Binding Source={StaticResource ImageContext}, Path=Images, Mode=TwoWay}">
+                                    <ItemsControl.ItemsPanel>
+                                        <ItemsPanelTemplate>
+                                            <!--<VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>-->
+                                            <UniformGrid Rows="1"/>
+                                        </ItemsPanelTemplate>
+                                    </ItemsControl.ItemsPanel>
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Viewbox Stretch="Uniform" Margin="5 0 5 0">
+                                                <Image x:Name="ImageItem" Source="{Binding}"/>
+                                            </Viewbox>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+                        <Viewbox Grid.Column="4" Stretch="Fill" StretchDirection="Both" Panel.ZIndex="1"
+                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                            <RepeatButton x:Name="RightButton" 
+                                          Background="{x:Null}" BorderThickness="0"
+                                          Click="RightButton_Click">
+                                <fa:FontAwesome Icon="AngleRight"
+                                                VerticalAlignment="Center"
+                                                HorizontalAlignment="Center"
+                                                Foreground="{StaticResource IconColor}"/>
+                            </RepeatButton>
                         </Viewbox>
                     </Grid>
                 </DockPanel>
@@ -181,34 +289,33 @@
                     </TextBlock>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="2*" />
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="10*" />
+                            <ColumnDefinition Width="20*" />
+                            <ColumnDefinition Width="20*" />
+                            <ColumnDefinition Width="20*" />
+                            <ColumnDefinition Width="10*" />
                         </Grid.ColumnDefinitions>
-                        <Viewbox Grid.Column="0" Stretch="Uniform" StretchDirection="DownOnly">
-                            <fa:FontAwesome 
-                            Icon="AngleLeft" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            FontSize="150"
-                            Foreground="{StaticResource IconColor}"/>
-                        </Viewbox>
-                        <Image Grid.Column="1"
-                            Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-43.png" />
-                        <Image Grid.Column="2"
-                            Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-43.png" />
-                        <Image Grid.Column="3"
-                            Source="/MediaTinLanh.UI;component/Resources/images/main/Layer-43.png" />
-                        <Viewbox Grid.Column="4" Stretch="Uniform" StretchDirection="DownOnly">
-                            <fa:FontAwesome 
-                            Icon="AngleRight" 
-                            VerticalAlignment="Center" 
-                            HorizontalAlignment="Center"
-                            FontSize="150"
-                            Foreground="{StaticResource IconColor}"/>
-                        </Viewbox>
+                        <Grid Grid.Column="0" Grid.ColumnSpan="5">
+                            <ListBox x:Name="ListBoxImage" Style="{StaticResource ListBoxStyleCustom}"
+                                     BorderThickness="0"
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                     ItemsSource="{Binding Source={StaticResource ImageContext}, Path=Images, Mode=TwoWay}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <!--<VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>-->
+                                        <UniformGrid Rows="1"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Viewbox Stretch="Uniform" Margin="5 0 5 0">
+                                            <Image Source="{Binding}"/>
+                                        </Viewbox>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
                     </Grid>
                 </DockPanel>
             </Grid>

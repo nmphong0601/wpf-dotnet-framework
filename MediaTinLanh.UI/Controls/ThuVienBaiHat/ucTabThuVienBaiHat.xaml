@@ -11,7 +11,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Resources>
-        <vm:ThanhCaViewModel x:Key="dbForThanhCa"/>
+        <vm:ThanhCaViewModel x:Key="ThanhCaContext"/>
 
         <resources:MathConverter x:Key="mathConverter"/>
         <resources:MarginConverter x:Key="marginConverter"/>
@@ -69,20 +69,11 @@
                 <RowDefinition Height="5*"/>
                 <RowDefinition Height="90*"/>
             </Grid.RowDefinitions>
-            <Border Grid.Row="0">
-                <Border.Style>
-                    <Style TargetType="Border">
-                        <Setter Property="BorderBrush">
-                            <Setter.Value>
-                                <SolidColorBrush Color="{StaticResource MDTLDarkGray}"></SolidColorBrush>
-                            </Setter.Value>
-                        </Setter>
-                        <Setter Property="BorderThickness" Value="3"></Setter>
-                    </Style>
-                </Border.Style>
+            <Border Grid.Row="0" Style="{StaticResource MDTLBorder}">
                 <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80*"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="30*"/>
                         <ColumnDefinition Width="20*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
@@ -102,7 +93,22 @@
                             </Style>
                         </TextBox.Style>
                     </TextBox>
-                    <Button x:Name="btnTimKiem" Grid.Column="1" Click="btnTimKiem_Click">
+                    <ComboBox x:Name="comboBoxTieuChi" Grid.Column="1" FontSize="12"
+                                  Style="{StaticResource MDTLComboBox}">
+                        <ComboBoxItem IsSelected="True">
+                            <DockPanel>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                           Text="Tên bài hát" FontSize="15" FontFamily="{StaticResource RobotoMedium}"></TextBlock>
+                            </DockPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <DockPanel>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                           Text="Số thứ tự" FontSize="15" FontFamily="{StaticResource RobotoMedium}"></TextBlock>
+                            </DockPanel>
+                        </ComboBoxItem>
+                    </ComboBox>
+                    <Button x:Name="btnTimKiem" Grid.Column="2" Click="btnTimKiem_Click">
                         <Button.Style>
                             <Style TargetType="Button">
                                 <Setter Property="Background">
@@ -135,133 +141,151 @@
                                 </Style.Triggers>
                             </Style>
                         </Button.Style>
-                        <TextBlock Text="Tìm kiếm"></TextBlock>
+                        <Viewbox>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                <materialDesign:PackIcon Kind="Search" VerticalAlignment="Center" Height="20" Width="20"/>
+                                <TextBlock Text="Tìm kiếm" VerticalAlignment="Center" HorizontalAlignment="Stretch"></TextBlock>
+                            </StackPanel>
+                        </Viewbox>
                     </Button>
                 </Grid>
             </Border>
-            <Border Grid.Row="1" BorderBrush="Transparent" BorderThickness="2">
-                <Grid x:Name="gridListLoaiBaiHat">
+            <Border Grid.Row="1" Style="{StaticResource MDTLBorder}">
+                <Grid>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="18*"/>
-                        <ColumnDefinition Width="32*"/>
-                        <ColumnDefinition Width="20*"/>
-                        <ColumnDefinition Width="30*"/>
+                        <ColumnDefinition Width="50*"/>
+                        <ColumnDefinition Width="50*"/>
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="100*"/>
                     </Grid.RowDefinitions>
-                    <Grid Grid.Column="0">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20*"/>
-                            <ColumnDefinition Width="80*"/>
-                        </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="ckbThanhCa" x:Uid="1" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
-                                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                      BorderBrush="White" BorderThickness="1" Checked="ckbLoaiThanhCa_Checked" Unchecked="ckbLoaiThanhCa_Unchecked">
-                        </CheckBox>
-                        <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Left">
-                            <TextBlock Text="Thánh Ca" HorizontalAlignment="Stretch" FontWeight="Bold"
-                                       Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"/>
-                        </Viewbox>
-                    </Grid>
-                    <Grid Grid.Column="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="15*"/>
-                            <ColumnDefinition Width="85*"/>
-                        </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="ckbTVCHH" x:Uid="2" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
-                                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                      BorderBrush="White" BorderThickness="1" Checked="ckbLoaiThanhCa_Checked" Unchecked="ckbLoaiThanhCa_Unchecked">
-                        </CheckBox>
-                        <Viewbox Grid.Column="1" x:Uid="3" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Tôn Vinh Chúa Hằng Hữu" HorizontalAlignment="Stretch" FontWeight="Bold"
-                                       Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"/>
-                        </Viewbox>
-                    </Grid>
-                    <Grid Grid.Column="2">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20*"/>
-                            <ColumnDefinition Width="80*"/>
-                        </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="ckbBietThanhCa" x:Uid="4" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
-                                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                      BorderBrush="White" BorderThickness="1" Checked="ckbLoaiThanhCa_Checked" Unchecked="ckbLoaiThanhCa_Unchecked">
-                        </CheckBox>
-                        <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Biệt Thánh Ca" HorizontalAlignment="Stretch" FontWeight="Bold"
-                                       Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"/>
-                        </Viewbox>
-                    </Grid>
-                    <Grid Grid.Column="3">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="15*"/>
-                            <ColumnDefinition Width="85*"/>
-                        </Grid.ColumnDefinitions>
-                        <CheckBox x:Name="ckbKinhThanhDoiDap" Grid.Column="0" Style="{StaticResource MDTLCheckBox}" 
-                                      HorizontalAlignment="Center" VerticalAlignment="Center"
-                                      IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type ListBoxItem}}, Path=IsSelected}"
-                                      BorderBrush="White" BorderThickness="1" Checked="ckbLoaiThanhCa_Checked" Unchecked="ckbLoaiThanhCa_Unchecked">
-                        </CheckBox>
-                        <Viewbox Grid.Column="1" StretchDirection="DownOnly" Stretch="Fill" HorizontalAlignment="Stretch">
-                            <TextBlock Text="Kinh Thánh Đối Đáp" HorizontalAlignment="Stretch" FontWeight="Bold"
-                                       Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"/>
-                        </Viewbox>
-                    </Grid>
+                    <ComboBox x:Name="cbxTieuChi" Grid.Column="0" Style="{StaticResource MDTLComboBox}"
+                              SelectedIndex="0" FontSize="12" SelectionChanged="cbxTieuChi_SelectionChanged"
+                              ItemsSource="{Binding Source={StaticResource ThanhCaContext}, Path=LoaiBaiHats, Mode=TwoWay}">
+                        <ComboBox.ItemTemplate>
+                            <DataTemplate>
+                                <DockPanel>
+                                    <Border Background="{StaticResource MDTLDarkBrownBrush}" Width="50" Margin="0 0 2 0">
+                                        <TextBlock VerticalAlignment="Center" 
+                                                   HorizontalAlignment="Center"
+                                                   Text="{Binding VietTat}" Foreground="{StaticResource MDTLDarkBrush}"
+                                                   FontFamily="{StaticResource RobotoMedium}"></TextBlock>
+                                    </Border>
+                                    <TextBlock VerticalAlignment="Center" 
+                                               HorizontalAlignment="Center"
+                                               Text="{Binding TenLoai}"
+                                               FontFamily="{StaticResource RobotoMedium}"></TextBlock>
+                                </DockPanel>
+                            </DataTemplate>
+                        </ComboBox.ItemTemplate>
+                    </ComboBox>
+                    <ComboBox x:Name="cbxNgonNgu" Grid.Column="1" FontSize="12"
+                              Style="{StaticResource MDTLComboBox}">
+                        <ComboBoxItem IsSelected="True">
+                            <DockPanel>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                           Text="Tiếng Việt" FontFamily="{StaticResource RobotoMedium}"></TextBlock>
+                            </DockPanel>
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            <DockPanel>
+                                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" 
+                                           Text="Tiếng Anh" FontFamily="{StaticResource RobotoMedium}"></TextBlock>
+                            </DockPanel>
+                        </ComboBoxItem>
+                    </ComboBox>
                 </Grid>
             </Border>
-            <Grid Grid.Row="2">
-                <Grid x:Name="gridLayoutListView" Visibility="Hidden">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="70*"/>
-                        <ColumnDefinition Width="30*"/>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0" x:Name="gridTenBaiHat"/>
-                    <Grid Grid.Column="1" x:Name="gridTheLoai"/>
-                </Grid>
+            <Border Grid.Row="2" Style="{StaticResource MDTLBorder}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="5*"/>
+                        <RowDefinition Height="90*"/>
+                        <RowDefinition Height="5*"/>
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="gridLayoutListView" Visibility="Hidden">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="70*"/>
+                            <ColumnDefinition Width="30*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0" x:Name="gridColumnSTT"/>
+                        <Grid Grid.Column="1" x:Name="gridColumnTenBaiHat"/>
+                        <Grid Grid.Column="2" x:Name="gridColumnTheLoai"/>
+                    </Grid>
 
-                <ListView x:Name="listViewThanhCa" Background="Transparent" BorderThickness="0" AlternationCount="2"
+                    <Border Grid.Row="0">
+                        <Button x:Name="btnPrevPage" Style="{StaticResource MDTLButton}" Click="btnPrevPage_Click">
+                            <materialDesign:PackIcon Kind="ChevronUp" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                    </Border>
+                    <ListView x:Name="listViewThanhCa" Grid.Row="1" Background="Transparent" BorderThickness="0" AlternationCount="2"
                           Style="{ StaticResource MDTLMaterialDesignListViewData}"
-                          SelectedItem="{Binding Source={StaticResource dbForThanhCa}, Path=SelectedItem, Mode=TwoWay}"
-                          ItemsSource="{Binding Source={StaticResource dbForThanhCa}, Path=Items, Mode=TwoWay}"
-                          ScrollViewer.VerticalScrollBarVisibility="Visible" 
-                          ScrollViewer.HorizontalScrollBarVisibility="Hidden" 
+                          SelectedItem="{Binding Source={StaticResource ThanhCaContext}, Path=SelectedItem, Mode=TwoWay}"
+                          ItemsSource="{Binding Source={StaticResource ThanhCaContext}, Path=Items, Mode=TwoWay}"
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                          ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                           SelectionChanged="listViewThanhCa_SelectionChanged">
-                    <ListView.View>
-                        <GridView x:Name="gridViewBaiHat">
-                            <GridViewColumn Header="Tên bài hát" 
-                                            Width="{Binding ElementName=gridTenBaiHat, Path=ActualWidth}" 
+                        <ListView.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <UniformGrid Columns="1" 
+                                         Rows="{Binding Path=Items.Count, RelativeSource={RelativeSource AncestorType={x:Type ListView}}}"/>
+                            </ItemsPanelTemplate>
+                        </ListView.ItemsPanel>
+                        <ListView.View>
+                            <GridView x:Name="gridViewBaiHat">
+                                <GridViewColumn Header="STT" 
+                                                Width="{Binding ElementName=gridColumnSTT, Path=ActualWidth}" 
+                                                HeaderContainerStyle="{StaticResource MDTLMaterialDesignGridViewColumnHeader}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <!--<TextBlock Text="{Binding STT}"
+                                                       HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                                                       Foreground="WhiteSmoke" FontFamily="{DynamicResource RobotoMedium}"
+                                                       TextWrapping="Wrap" FontSize="12"/>-->
+                                            <Border BorderBrush="WhiteSmoke" BorderThickness="0 0 .5 0" Margin="-5,-2">
+                                                <TextBlock Text="{Binding STT}" Margin="5,2" FontSize="12" Foreground="WhiteSmoke"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                           TextWrapping="Wrap" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Tên bài hát" 
+                                            Width="{Binding ElementName=gridColumnTenBaiHat, Path=ActualWidth}" 
                                             HeaderContainerStyle="{StaticResource MDTLMaterialDesignGridViewColumnHeader}">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Border BorderBrush="WhiteSmoke" BorderThickness="0,0,1,0">
-                                            <TextBlock Text="{Binding Ten}" Margin="0,2,0,2"
-                                                       HorizontalAlignment="Stretch" Foreground="WhiteSmoke"
-                                                       FontFamily="{DynamicResource RobotoMedium}"
-                                                       TextWrapping="Wrap" FontSize="12"/>
-                                        </Border>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                            <GridViewColumn Header="Thể loại" 
-                                            Width="{Binding ElementName=gridTheLoai, Path=ActualWidth}" 
-                                            HeaderContainerStyle="{StaticResource MDTLMaterialDesignGridViewColumnHeader}">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <Border BorderBrush="WhiteSmoke" BorderThickness="0,0,1,0">
-                                            <TextBlock Text="{Binding LoaiThanhCa.TenLoai}" Margin="0,2,0,2" 
-                                                       HorizontalAlignment="Center" Foreground="WhiteSmoke"
-                                                       FontFamily="{DynamicResource RobotoMedium}" FontSize="12"/>
-                                        </Border>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-            </Grid>
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="WhiteSmoke" BorderThickness="0 0 .5 0" Margin="-5,-2">
+                                                <TextBlock Text="{Binding Ten}" Margin="5,2" FontSize="12" Foreground="WhiteSmoke"
+                                                           VerticalAlignment="Center"/>
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Header="Thể loại" 
+                                                Width="{Binding ElementName=gridColumnTheLoai, Path=ActualWidth}" 
+                                                HeaderContainerStyle="{StaticResource MDTLMaterialDesignGridViewColumnHeader}">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Border BorderBrush="WhiteSmoke" BorderThickness="0 0 .5 0" Margin="-5,-2">
+                                                <TextBlock Text="{Binding LoaiThanhCa.TenLoai}" Margin="5,2" FontSize="12" Foreground="WhiteSmoke"
+                                                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                                                           TextWrapping="Wrap" />
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <Border Grid.Row="2">
+                        <Button x:Name="btnNextPage" Style="{StaticResource MDTLButton}" Click="btnNextPage_Click">
+                            <materialDesign:PackIcon Kind="ChevronDown" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Button>
+                    </Border>
+                </Grid>
+            </Border>
         </Grid>
 
         <DockPanel Grid.Column="1" Grid.Row="0" Margin="0,5,0,5">

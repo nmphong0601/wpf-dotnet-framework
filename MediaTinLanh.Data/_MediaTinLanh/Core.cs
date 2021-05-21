@@ -647,7 +647,7 @@ namespace MediaTinLanh.Data
         public virtual int Count(string where = null, params object[] parms)
         {
             string sql = CreateScalar("COUNT", keyName, where);
-            return (int)db.Scalar(sql, parms);
+            return Convert.ToInt32(db.Scalar(sql, parms));
         }
 
         // retrieves a scalar max value by criteria
@@ -800,12 +800,17 @@ namespace MediaTinLanh.Data
 
         string CreatePaged(string where, string orderBy, int page, int pageSize)
         {
-            string t = "TOP " + pageSize;
+            //string t = "TOP " + pageSize;
+            //string w = where.IsNullOrEmpty() ? null : "WHERE " + where;
+            //string o = orderBy.IsNullOrEmpty() ? keyName : orderBy;
+            //string r = "WHERE Row > " + ((page - 1) * pageSize);
+
             string w = where.IsNullOrEmpty() ? null : "WHERE " + where;
             string o = orderBy.IsNullOrEmpty() ? keyName : orderBy;
             string r = "WHERE Row > " + ((page - 1) * pageSize);
+            string l = "LIMIT " + pageSize;
 
-            return string.Format(sqlPaged, t, w, o, r);
+            return string.Format(sqlPaged, w, o, r, l);
         }
 
         // helper: creates a scalar sql select statement
@@ -853,7 +858,8 @@ namespace MediaTinLanh.Data
                 cols.AppendFormat("{0}, ", key);
 
             // {{0}} is for TOP, {{1}} and {{2}} for WHERE, ORDER BY, {{3}} for Row WHERE.
-            string sql = "SELECT {{0}} {0} FROM (SELECT ROW_NUMBER() OVER (ORDER BY {{2}}) AS Row, {0} FROM {1} {{1}} ) AS Paged {{3}}";
+            //string sql = "SELECT {{0}} {0} FROM (SELECT ROW_NUMBER() OVER (ORDER BY {{2}}) AS Row, {0} FROM {1} {{1}} ) AS Paged {{3}}";
+            string sql = "SELECT {0} FROM (SELECT ROW_NUMBER() OVER (ORDER BY {{1}}) AS Row, {0} FROM {1} {{0}} ) AS Paged {{2}} {{3}}";
             sqlPaged = string.Format(sql, cols.TrimEnd(), tableName.Bracket());
         }
 

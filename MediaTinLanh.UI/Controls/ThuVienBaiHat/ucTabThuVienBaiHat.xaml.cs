@@ -24,75 +24,52 @@ namespace MediaTinLanh.UI.Controls
     /// </summary>
     public partial class ucTabThuVienBaiHat : UserControl
     {
+        private ThanhCaViewModel ThanhCaDataContext { get; set; }
+
         public ucTabThuVienBaiHat()
         {
             InitializeComponent();
+            ThanhCaDataContext = (ThanhCaViewModel)this.Resources["ThanhCaContext"];
 
-            var danhSachLoaiThanhCa = Mapper.Map<IEnumerable<LoaiBaiHat>, IEnumerable<LoaiBaiHatModel>>(dbContext.LoaiBaiHats.All());
+            var listLoaiThanhCaModel = Mapper.Map<IEnumerable<LoaiBaiHat>, IEnumerable<LoaiBaiHatModel>>(dbContext.LoaiBaiHats.All().ToList());
+            ThanhCaDataContext.LoaiBaiHats = new ObservableCollection<LoaiBaiHatModel>(listLoaiThanhCaModel);
 
-            var dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
-            var listThanhCaModel = Mapper.Map<IEnumerable<ThanhCa>, IEnumerable<ThanhCaModel>>(dbContext.ThanhCas.All(orderBy: "STT ASC").ToList());
-            dbThanhCa.Items = new ObservableCollection<ThanhCaModel>(listThanhCaModel);
+            ThanhCaDataContext.SelectedLoaiBaiHat = cbxTieuChi.SelectedItem as LoaiBaiHatModel;
+
+            loadDuLieuThanhCa();
         }
 
         private void btnTimKiem_Click(object sender, RoutedEventArgs e)
         {
-            var dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
+            ThanhCaDataContext.Page = 1;
 
-            var filterTenThanhCa = !string.IsNullOrEmpty(txtTimBaiHat.Text) ? $"Ten COLLATE UTF8CI LIKE {"'%" + txtTimBaiHat.Text + "%'"}" : "";
-            var filterLoaiThanhCa = "";
-            if (dbThanhCa.SelectedLoaiBaiHats.Count() != 0)
-            {
-                filterLoaiThanhCa += !string.IsNullOrEmpty(filterTenThanhCa) ? " AND " : "";
-                filterLoaiThanhCa += "( Loai = " + string.Join(" OR Loai = ", dbThanhCa.SelectedLoaiBaiHats.Select(x => x.ID)) + ")";
-            }
-
-            var listThanhCa = dbContext.ThanhCas.All(where: filterTenThanhCa + filterLoaiThanhCa, orderBy: "STT ASC");
-            var listThanhCaModel = Mapper.Map<List<ThanhCa>, List<ThanhCaModel>>(listThanhCa.ToList());
-
-            dbThanhCa.Items = new ObservableCollection<ThanhCaModel>(listThanhCaModel);
+            loadDuLieuThanhCa();
         }
 
-        private void ckbLoaiThanhCa_Checked(object sender, RoutedEventArgs e)
+        private void cbxTieuChi_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CheckBox checkBox = sender as CheckBox;
-            ThanhCaViewModel dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
-            
-            var selectedLoaiThanhCa = Mapper.Map<LoaiBaiHat, LoaiBaiHatModel>(dbContext.LoaiBaiHats.Single(int.Parse(checkBox.Uid)));
-            if (dbThanhCa.SelectedLoaiBaiHats.IndexOf(selectedLoaiThanhCa) == -1)
-            {
-                dbThanhCa.SelectedLoaiBaiHats.Add(selectedLoaiThanhCa);
-            }
-
-            var filterLoaiThanhCa = "";
-            if (dbThanhCa.SelectedLoaiBaiHats.Count() != 0)
-            {
-                filterLoaiThanhCa += "( Loai = " + string.Join(" OR Loai = ", dbThanhCa.SelectedLoaiBaiHats.Select(x => x.ID)) + ")";
-            }
-            
-            var listThanhCa = dbContext.ThanhCas.All(where: filterLoaiThanhCa, orderBy: "STT ASC");
-            var listThanhCaModel = Mapper.Map<List<ThanhCa>, List<ThanhCaModel>>(listThanhCa.ToList());
-
-            dbThanhCa.Items = new ObservableCollection<ThanhCaModel>(listThanhCaModel);
+            ThanhCaDataContext.SelectedLoaiBaiHat = cbxTieuChi.SelectedItem as LoaiBaiHatModel;
         }
 
-        private void ckbLoaiThanhCa_Unchecked(object sender, RoutedEventArgs e)
+        private void btnPrevPage_Click(object sender, RoutedEventArgs e)
         {
-            CheckBox checkBox = sender as CheckBox;
-            ThanhCaViewModel dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
-            LoaiBaiHatModel unSelectedLoaiThanhCa = dbThanhCa.SelectedLoaiBaiHats.Single(x => x.ID == int.Parse(checkBox.Uid));
-
-            dbThanhCa.SelectedLoaiBaiHats.Remove(unSelectedLoaiThanhCa);
-
-            var filterLoaiThanhCa = "";
-            if (dbThanhCa.SelectedLoaiBaiHats.Count() != 0)
+            if(ThanhCaDataContext.Page != 1)
             {
-                filterLoaiThanhCa += "( Loai = " + string.Join(" OR Loai = ", dbThanhCa.SelectedLoaiBaiHats.Select(x => x.ID)) + ")";
-            }
-            var listThanhCa = dbContext.ThanhCas.All(where: filterLoaiThanhCa, orderBy: "STT ASC");
-            var listThanhCaModel = Mapper.Map<List<ThanhCa>, List<ThanhCaModel>>(listThanhCa.ToList());
+                ThanhCaDataContext.Page -= 1;
 
-            dbThanhCa.Items = new ObservableCollection<ThanhCaModel>(listThanhCaModel);
+                loadDuLieuThanhCa();
+            }
+        }
+
+        private void btnNextPage_Click(object sender, RoutedEventArgs e)
+        {
+            var totalPage = ThanhCaDataContext.TotalItem / ThanhCaDataContext.PageSize;
+            if (ThanhCaDataContext.Page != totalPage)
+            {
+                ThanhCaDataContext.Page += 1;
+
+                loadDuLieuThanhCa();
+            }
         }
 
         private void btnTaiVe_Click(object sender, RoutedEventArgs e)
@@ -103,8 +80,7 @@ namespace MediaTinLanh.UI.Controls
             var fileName = "";
             var filePathOnRemote = "";
 
-            var dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
-            var selectedThanhCa = dbThanhCa.SelectedItem;
+            var selectedThanhCa = ThanhCaDataContext.SelectedItem;
 
             if (selectedThanhCa != null)
             {
@@ -265,8 +241,7 @@ namespace MediaTinLanh.UI.Controls
         {
             try
             {
-                var dbThanhCa = (ThanhCaViewModel)this.Resources["dbForThanhCa"];
-                var selectedThanhCa = dbThanhCa.SelectedItem;
+                var selectedThanhCa = ThanhCaDataContext.SelectedItem;
 
                 if (selectedThanhCa.LoiBaiHats.Count == 0)
                 {
@@ -297,6 +272,21 @@ namespace MediaTinLanh.UI.Controls
 
         }
 
+        private void loadDuLieuThanhCa()
+        {
+            var filterTenThanhCa = !string.IsNullOrEmpty(txtTimBaiHat.Text) ? $"AND Ten COLLATE UTF8CI LIKE {"'%" + txtTimBaiHat.Text + "%'"}" : "";
+
+            int toTal = ThanhCaDataContext.TotalItem;
+            var listThanhCa = dbContext.ThanhCas.Paged(out toTal,
+                where: "Loai = @0 " + filterTenThanhCa,
+                orderBy: "STT ASC",
+                page: ThanhCaDataContext.Page,
+                pageSize: ThanhCaDataContext.PageSize, parms: new object[] { ThanhCaDataContext.SelectedLoaiBaiHat.ID });
+            var listThanhCaModel = Mapper.Map<List<ThanhCa>, List<ThanhCaModel>>(listThanhCa.ToList());
+
+            ThanhCaDataContext.Items = new ObservableCollection<ThanhCaModel>(listThanhCaModel);
+        }
+
         private string browseFilePath()
         {
             System.Windows.Forms.FolderBrowserDialog folderBrowserDialog = new System.Windows.Forms.FolderBrowserDialog();
@@ -321,5 +311,6 @@ namespace MediaTinLanh.UI.Controls
 
             await DialogHost.Show(sampleMessageDialog, "RootDialog");
         }
+        
     }
 }

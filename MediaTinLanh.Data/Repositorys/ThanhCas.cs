@@ -25,6 +25,23 @@ namespace MediaTinLanh.Data
 
             return thanhCas;
         }
+
+        public override IEnumerable<ThanhCa> Paged(out int totalRows, string where = null, string orderBy = null, int page = 0, int pageSize = 20, params object[] parms)
+        {
+
+            var thanhCas = base.Paged(out totalRows, where, orderBy, page, pageSize, parms).ToList();
+            if (thanhCas.Count() != 0)
+            {
+                for (int i = 0; i <= thanhCas.Count() - 1; i++)
+                {
+                    var tc = dbMediaTinLanh.ThanhCas.Single(thanhCas[i].ID);
+                    thanhCas[i].LoaiThanhCa = tc.LoaiThanhCa;
+                }
+            }
+
+            return thanhCas;
+        }
+
         public override ThanhCa Single(int? id)
         {
 

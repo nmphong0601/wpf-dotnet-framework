@@ -27,6 +27,12 @@
     <Color x:Key="MDTLDarkGray">#424242</Color>
     <Color x:Key="MDTLSuperDarkGray">#282828</Color>
     
+    <!--Brush-->
+    <SolidColorBrush x:Key="MDTLPrimaryBrush" Color="{StaticResource MDTLGray}"/>
+    <SolidColorBrush x:Key="MDTLSecondBrush" Color="{StaticResource MDTLDarkGray}"/>
+    <SolidColorBrush x:Key="MDTLDarkBrush" Color="{StaticResource MDTLSuperDarkGray}"/>
+    <SolidColorBrush x:Key="MDTLDarkBrownBrush" Color="{StaticResource MDTLBrown}"/>
+
     <!--Window-->
     <Style x:Key="MDTLWindow" TargetType="{x:Type Window}">
         <Setter Property="WindowChrome.WindowChrome">
@@ -263,6 +269,266 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <!--Border - End-->
+    <Style x:Key="MDTLBorder" TargetType="{x:Type Border}">
+        <Setter Property="BorderBrush">
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource MDTLDarkGray}"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="BorderThickness" Value="3"></Setter>
+    </Style>
+    <!--Border - Start-->
+
+    <!---ComboBox - Start-->
+    
+    <ControlTemplate x:Key="MDTLComboBoxToggleButton" TargetType="{x:Type ToggleButton}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <Border
+                  x:Name="Border" 
+                  Grid.ColumnSpan="2"
+                  CornerRadius="0"
+                  Background="{StaticResource MDTLDarkBrush}"
+                  BorderBrush="{StaticResource MDTLPrimaryBrush}"
+                  BorderThickness="0.5" />
+            <Border 
+                  Grid.Column="0"
+                  CornerRadius="0" 
+                  Margin="1" 
+                  Background="{StaticResource MDTLDarkBrush}" 
+                  BorderBrush="{StaticResource MDTLPrimaryBrush}"
+                  BorderThickness="0,0,1,0" />
+            <Path 
+                  x:Name="Arrow"
+                  Grid.Column="1"     
+                  Fill="WhiteSmoke"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"
+                  Data="M0,0 L0,2 L4,6 L8,2 L8,0 L4,4 z"
+                />
+        </Grid>
+        <!--<ControlTemplate.Triggers>
+            <Trigger Property="ToggleButton.IsMouseOver" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#808080" />
+            </Trigger>
+            <Trigger Property="ToggleButton.IsChecked" Value="true">
+                <Setter TargetName="Border" Property="Background" Value="#E0E0E0" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="Border" Property="Background" Value="#EEEEEE" />
+                <Setter TargetName="Border" Property="BorderBrush" Value="#AAAAAA" />
+                <Setter Property="Foreground" Value="#888888"/>
+                <Setter TargetName="Arrow" Property="Fill" Value="#888888" />
+            </Trigger>
+        </ControlTemplate.Triggers>-->
+    </ControlTemplate>
+
+    <ControlTemplate x:Key="MDTLComboBoxTextBox" TargetType="{x:Type TextBox}">
+        <Border x:Name="PART_ContentHost" Focusable="False" Background="{TemplateBinding Background}"/>
+    </ControlTemplate>
+    
+    <!-- SimpleStyles: ComboBoxItem -->
+    <Style x:Key="MDTLComboBoxItem" TargetType="{x:Type ComboBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBoxItem}">
+                    <Border Name="Border"
+                            Padding="5"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            SnapsToDevicePixels="true" 
+                            HorizontalAlignment="Stretch">
+                        <ContentPresenter HorizontalAlignment="Left" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsKeyboardFocused" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                                <Condition Property="IsKeyboardFocused" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="True"/>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                                <Condition Property="IsKeyboardFocused" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                                <Condition Property="IsKeyboardFocused" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsSelected" Value="False"/>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="IsKeyboardFocused" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </MultiTrigger>
+                        <!--<Trigger Property="IsHighlighted" Value="true">
+                            <Setter TargetName="Border" Property="Background">
+                                <Setter.Value>
+                                    <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>-->
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#888888"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MDTLComboBox" TargetType="{x:Type ComboBox}">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <!--<Setter Property="MinWidth" Value="120"/>
+        <Setter Property="MinHeight" Value="20"/>-->
+        <Setter Property="Foreground" Value="White"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource MDTLComboBoxItem}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ComboBox}">
+                    <Grid>
+                        <ToggleButton 
+                            Name="ToggleButton" 
+                            Template="{StaticResource MDTLComboBoxToggleButton}" 
+                            Grid.Column="2" 
+                            Focusable="false"
+                            IsChecked="{Binding Path=IsDropDownOpen,Mode=TwoWay,RelativeSource={RelativeSource TemplatedParent}}"
+                            ClickMode="Press">
+                        </ToggleButton>
+                        <Viewbox HorizontalAlignment="Left">
+                            <ContentPresenter Name="ContentSite" IsHitTestVisible="False"
+                                              Content="{TemplateBinding SelectionBoxItem}"
+                                              ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
+                                              ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                              Margin="3,3,3,3" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                        </Viewbox>
+                        <TextBox x:Name="PART_EditableTextBox"
+                                 Style="{x:Null}"
+                                 Template="{StaticResource MDTLComboBoxTextBox}" 
+                                 HorizontalAlignment="Left" 
+                                 VerticalAlignment="Center" 
+                                 Margin="3,3,3,3"
+                                 Focusable="True" 
+                                 Background="#FF3F3F3F"
+                                 Foreground="Green"
+                                 Visibility="Hidden"
+                                 IsReadOnly="{TemplateBinding IsReadOnly}"/>
+                        <Popup 
+                            Name="Popup"
+                            Placement="Bottom"
+                            IsOpen="{TemplateBinding IsDropDownOpen}"
+                            AllowsTransparency="True" 
+                            Focusable="False"
+                            PopupAnimation="Slide">
+
+                            <Grid Name="DropDown"
+                              SnapsToDevicePixels="True"                
+                              MinWidth="{TemplateBinding ActualWidth}"
+                              MaxHeight="{TemplateBinding MaxDropDownHeight}">
+                                <Border 
+                                x:Name="DropDownBorder"
+                                Background="#FF3F3F3F"
+
+                                BorderThickness="1"
+                                BorderBrush="{StaticResource MDTLDarkBrush}"/>
+                                <ScrollViewer Margin="4,6,4,6" SnapsToDevicePixels="True">
+                                    <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Contained" />
+                                </ScrollViewer>
+                            </Grid>
+                        </Popup>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="HasItems" Value="false">
+                            <Setter TargetName="DropDownBorder" Property="MinHeight" Value="95"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="#888888"/>
+                        </Trigger>
+                        <Trigger Property="IsGrouping" Value="true">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
+                        </Trigger>
+                        <Trigger SourceName="Popup" Property="Popup.AllowsTransparency" Value="true">
+                            <Setter TargetName="DropDownBorder" Property="CornerRadius" Value="0"/>
+                            <Setter TargetName="DropDownBorder" Property="Margin" Value="0,2,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsEditable"  Value="true">
+                            <Setter Property="IsTabStop" Value="false"/>
+                            <Setter TargetName="PART_EditableTextBox" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="ContentSite" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+        </Style.Triggers>
+    </Style>
+
+    <!--ComboBox - End-->
 
     <Style x:Key="MDTLCheckBox" TargetType="{x:Type CheckBox}">
         <Setter Property="Background">
@@ -338,11 +604,11 @@
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                                          Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+                                                                      Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
                                             <EasingColorKeyFrame KeyTime="0" Value="#535353" />
                                         </ColorAnimationUsingKeyFrames>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                                          Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
+                                                                      Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
                                             <EasingColorKeyFrame KeyTime="0" Value="#535353" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
@@ -350,15 +616,15 @@
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                                          Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+                                                                      Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
                                             <EasingColorKeyFrame KeyTime="0" Value="#424242" />
                                         </ColorAnimationUsingKeyFrames>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                                          Storyboard.TargetProperty="(Border.BorderBrush).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
+                                                                      Storyboard.TargetProperty="(Border.BorderBrush).(GradientBrush.GradientStops)[0].(GradientStop.Color)">
                                             <EasingColorKeyFrame KeyTime="0" Value="#282828" />
                                         </ColorAnimationUsingKeyFrames>
                                         <ColorAnimationUsingKeyFrames Storyboard.TargetName="Border"
-                                                                          Storyboard.TargetProperty="(Border.BorderBrush).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
+                                                                      Storyboard.TargetProperty="(Border.BorderBrush).(GradientBrush.GradientStops)[1].(GradientStop.Color)">
                                             <EasingColorKeyFrame KeyTime="0" Value="WhiteSmoke" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
@@ -369,7 +635,7 @@
                                 <VisualState x:Name="Checked">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                                           Storyboard.TargetName="CheckMark">
+                                                                       Storyboard.TargetName="CheckMark">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
@@ -378,7 +644,7 @@
                                 <VisualState x:Name="Indeterminate">
                                     <Storyboard>
                                         <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                                           Storyboard.TargetName="InderminateMark">
+                                                                       Storyboard.TargetName="InderminateMark">
                                             <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}" />
                                         </ObjectAnimationUsingKeyFrames>
                                     </Storyboard>
@@ -635,20 +901,36 @@
         <Setter Property="ItemContainerStyle" Value="{StaticResource MDTLMaterialDesignListViewItem}"/>
     </Style>
 
+    <!--ListView - Start-->
+
+    <Style x:Key="CustomListViewItem" TargetType="{x:Type ListViewItem}">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="BorderBrush" Value="Gray"></Setter>
+        <Setter Property="BorderThickness" Value="0,0,0,1"></Setter>
+    </Style>
 
     <Style x:Key="MDTLMaterialDesignGridViewColumnHeader" TargetType="{x:Type GridViewColumnHeader}">
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="BorderBrush" Value="Transparent"></Setter>
         <Setter Property="BorderThickness" Value="0"></Setter>
+        <Setter Property="Foreground" Value="WhiteSmoke"></Setter>
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"></SolidColorBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="FontFamily" Value="{DynamicResource RobotoMedium}"></Setter>
+        <Setter Property="FontSize" Value="12"></Setter>
+
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GridViewColumnHeader">
                     <Grid>
                         <Border x:Name="HeaderBorder"
-                                BorderThickness="0"
-                                BorderBrush="Transparent"
-                                Background="Transparent"
-                                Margin="0" Padding="0">
+                                BorderThickness=".5 0 .5 0"
+                                BorderBrush="WhiteSmoke"
+                                Background="{StaticResource MDTLSecondBrush}"
+                                Padding="5">
                             <ContentPresenter Name="HeaderContent"
                                               TextElement.Foreground="White"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
@@ -668,23 +950,13 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Foreground" Value="WhiteSmoke"></Setter>
-        <Setter Property="Background">
-            <Setter.Value>
-                <SolidColorBrush Color="{StaticResource MDTLSuperDarkGray}"></SolidColorBrush>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="FontFamily" Value="{DynamicResource RobotoMedium}"></Setter>
-        <Setter Property="FontSize" Value="12"></Setter>
     </Style>
-    
     <Style x:Key="MDTLMaterialDesignListViewItemData" TargetType="{x:Type ListViewItem}">
         <Setter Property="Background">
             <Setter.Value>
                 <SolidColorBrush Color="{StaticResource MDTLDarkGray}"></SolidColorBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="Margin" Value="0"/>
         <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
         <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
         <Setter Property="Template">
@@ -693,11 +965,18 @@
                     <Grid Background="{TemplateBinding Background}">
                         <Border x:Name="Selection" Visibility="Collapsed" />
                         <!-- This is used when GridView is put inside the ListView -->
-                        <GridViewRowPresenter Grid.RowSpan="2"
+                        <Border BorderBrush="Transparent"
+                                BorderThickness="1"
+                                Background="{TemplateBinding Background}">
+                            <GridViewRowPresenter HorizontalAlignment="Stretch" 
+                                                  VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Width="Auto" Margin="0" 
+                                                  Content="{TemplateBinding Content}"/>
+                        </Border>
+                        <!--<GridViewRowPresenter Grid.RowSpan="2"
                                               Margin="{TemplateBinding Margin}"
                                               HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                               VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>-->
 
                     </Grid>
                 </ControlTemplate>
@@ -739,6 +1018,7 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="ItemContainerStyle" Value="{StaticResource MDTLMaterialDesignListViewItemData}"/>
     </Style>
+    <!--ListView - End-->
 
     <Style x:Key="MDTLMaterialDesignListViewItemGridView" TargetType="{x:Type ListViewItem}">
         <Setter Property="Background">
@@ -859,6 +1139,256 @@
         </Style.Triggers>
     </Style>
 
+
+    <!-- Fill Brushes -->
+
+    <SolidColorBrush x:Key="NormalBrush" Color="#FFCCCCCC"/>
+
+    <SolidColorBrush x:Key="PressedBrush" Color="#FFEEEEEE"/>
+
+    <SolidColorBrush x:Key="DisabledForegroundBrush" Color="#888" />
+
+    <!-- Border Brushes -->
+
+    <LinearGradientBrush x:Key="NormalBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientBrush.GradientStops>
+            <GradientStopCollection>
+                <GradientStop Color="#CCC" Offset="0.0"/>
+                <GradientStop Color="#444" Offset="1.0"/>
+            </GradientStopCollection>
+        </GradientBrush.GradientStops>
+    </LinearGradientBrush>
+    <Style x:Key="ScrollBarLineButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Name="Border" CornerRadius="2"  
+                            Background="{StaticResource NormalBrush}"
+                            BorderBrush="{StaticResource NormalBorderBrush}" >
+                        <Path HorizontalAlignment="Center" VerticalAlignment="Center" Fill="Gray"
+                                Data="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" 
+                                Opacity="{Binding Path=Opacity, RelativeSource={RelativeSource TemplatedParent}}"  />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="true">
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ScrollBarPageButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ScrollBarThumb" TargetType="{x:Type Thumb}">
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Thumb}">
+                    <Border CornerRadius="2" Background="{TemplateBinding Background}" 
+                                BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="CustomListBoxItem" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border  Name="Border" Padding="1" SnapsToDevicePixels="true">
+                        <ContentPresenter />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style x:Key="ListBoxWithAutoScroll_Horizontal" TargetType="{x:Type ListBox}" >
+        <Setter Property="SnapsToDevicePixels" Value="true"/>
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
+        <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="ItemContainerStyle" Value="{StaticResource CustomListBoxItem}"/>
+        <Setter Property="Template">
+            <Setter.Value >
+                <ControlTemplate>
+                    <Grid >
+                        <ScrollViewer x:Name="scrollviewer" >
+                            <ScrollViewer.Template>
+                                <ControlTemplate TargetType="{x:Type ScrollViewer}" >
+                                    <Grid>
+                                        <ScrollBar x:Name="PART_HorizontalScrollBar" Orientation="Horizontal" 
+                                                               Value="{TemplateBinding HorizontalOffset}"
+                                                               Maximum="{TemplateBinding ScrollableWidth}"
+                                                               ViewportSize="{TemplateBinding ViewportWidth}"
+                                                               Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                               Height="{Binding Height, ElementName=Panel}">
+                                            <ScrollBar.Template>
+                                                <ControlTemplate>
+                                                    <Track x:Name="PART_Track">
+                                                        <Track.DecreaseRepeatButton>
+                                                            <RepeatButton Command="ScrollBar.PageLeftCommand"
+						                                                    Style="{StaticResource ScrollBarPageButton}"/>
+                                                        </Track.DecreaseRepeatButton>
+                                                        <Track.IncreaseRepeatButton>
+                                                            <RepeatButton Command="ScrollBar.PageRightCommand"
+						                                                    Style="{StaticResource ScrollBarPageButton}"/>
+                                                        </Track.IncreaseRepeatButton>
+                                                        <Track.Thumb>
+                                                            <Thumb Style="{StaticResource ScrollBarThumb}" 
+                                                                         Background="Gray" Opacity="0" Margin="0,-1" />
+                                                        </Track.Thumb>
+                                                    </Track>
+                                                </ControlTemplate>
+                                            </ScrollBar.Template>
+                                        </ScrollBar>
+                                        <ScrollContentPresenter Margin="0,2" Height="Auto" VerticalAlignment="Center"/>
+                                    </Grid>
+                                </ControlTemplate>
+                            </ScrollViewer.Template>
+                            <ItemsPresenter/>
+                        </ScrollViewer>
+                        <Grid x:Name="Panel" Margin="0,2" >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <RepeatButton x:Name="LineLeftButton" Grid.Column="0" Width="20" Opacity="0" Visibility="Collapsed"
+                                      Style="{StaticResource ScrollBarLineButton}"
+                                      Content="M 8 0 L 8 32 L 0 16 Z"       
+                                      Command="{x:Static ScrollBar.LineLeftCommand}"       
+                                      CommandTarget="{Binding ElementName=scrollviewer}"
+                                      ClickMode="Press" />
+                            <RepeatButton x:Name="LineRightButton" Grid.Column="2" Width="20" Opacity="0" Visibility="Collapsed"
+                                      Style="{StaticResource ScrollBarLineButton}"
+                                      Content="M 0 0 L 8 16 L 0 32 Z" 
+                                      Command="{x:Static ScrollBar.LineRightCommand}"       
+                                      CommandTarget="{Binding ElementName=scrollviewer}"
+                                      ClickMode="Press"/>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True"/>
+                                <Condition Property="ComputedHorizontalScrollBarVisibility" SourceName="scrollviewer" Value="Visible"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="LineLeftButton" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="LineRightButton" Property="Visibility" Value="Visible" />
+                            </MultiTrigger.Setters>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="LineLeftButton" 
+                                                             Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="LineRightButton" 
+                                                             Storyboard.TargetProperty="Opacity" To="0.8" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="LineLeftButton" 
+                                                             Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25"/>
+                                        <DoubleAnimation Storyboard.TargetName="LineRightButton" 
+                                                             Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemsPanel">
+            <Setter.Value >
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MDTLHorizontalScrollViewer" TargetType="{x:Type ScrollViewer}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                    <Grid>
+                        <ScrollBar x:Name="PART_HorizontalScrollBar" Orientation="Horizontal" 
+                                                               Value="{TemplateBinding HorizontalOffset}"
+                                                               Maximum="{TemplateBinding ScrollableWidth}"
+                                                               ViewportSize="{TemplateBinding ViewportWidth}"
+                                                               Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}"
+                                                               Height="{Binding Height, ElementName=Panel}">
+                            <ScrollBar.Template>
+                                <ControlTemplate>
+                                    <Track x:Name="PART_Track">
+                                        <Track.DecreaseRepeatButton>
+                                            <RepeatButton x:Name="PART_LeftButton" Command="ScrollBar.PageLeftCommand"
+						                                                    Style="{StaticResource ScrollBarPageButton}"/>
+                                        </Track.DecreaseRepeatButton>
+                                        <Track.IncreaseRepeatButton>
+                                            <RepeatButton x:Name="PART_RightButton" Command="ScrollBar.PageRightCommand"
+						                                                    Style="{StaticResource ScrollBarPageButton}"/>
+                                        </Track.IncreaseRepeatButton>
+                                        <Track.Thumb>
+                                            <Thumb Style="{StaticResource ScrollBarThumb}"
+                                                   Background="Gray" Opacity="0" Margin="0,-1" />
+                                        </Track.Thumb>
+                                    </Track>
+                                </ControlTemplate>
+                            </ScrollBar.Template>
+                        </ScrollBar>
+                        <ScrollContentPresenter Margin="0,2" Height="Auto" VerticalAlignment="Center"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MDTLScrollBarButton" TargetType="{x:Type RepeatButton}">
+        <Setter Property="OverridesDefaultStyle" Value="true"/>
+        <Setter Property="Focusable" Value="false"/>
+        <Setter Property="IsTabStop" Value="false"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type RepeatButton}">
+                    <Border Background="Transparent" Height="14" Width="14">
+                        <Path HorizontalAlignment="Center" VerticalAlignment="Center" Stretch="Uniform" Margin="2"
+                          Data="{Binding Path=Content, RelativeSource={RelativeSource TemplatedParent}}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Duration x:Key="ExpandDuration">0:0:0.250</Duration>
     <Duration x:Key="CollapseDuration">0:0:0.200</Duration>
 
@@ -916,6 +1446,7 @@
             </DoubleAnimation.EasingFunction>
         </DoubleAnimation>
     </Storyboard>
+
     <!--<Storyboard x:Key="OpenMenu">
         <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="GridMenu">
             <EasingDoubleKeyFrame KeyTime="0" Value="70"/>
