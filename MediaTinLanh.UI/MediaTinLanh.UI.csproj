@@ -176,9 +176,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\Carousel.xaml.cs">
-      <DependentUpon>Carousel.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\TaoTrinhChieu\TaoTrinhChieuViewModel.cs" />
     <Compile Include="Controls\TaoTrinhChieu\ucTabTuTaoTrinhChieu.xaml.cs">
       <DependentUpon>ucTabTuTaoTrinhChieu.xaml</DependentUpon>
@@ -190,13 +187,12 @@
       <DependentUpon>ucThanhCa.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Converters.cs" />
+    <Compile Include="Resources\CustomResourceDictionary.xaml.cs">
+      <DependentUpon>CustomResourceDictionary.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\ImageViewModel.cs" />
     <Compile Include="ViewModels\MessageViewModel.cs" />
     <Compile Include="ViewModels\ThanhCaViewModel.cs" />
-    <Page Include="Controls\Carousel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\IntroWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

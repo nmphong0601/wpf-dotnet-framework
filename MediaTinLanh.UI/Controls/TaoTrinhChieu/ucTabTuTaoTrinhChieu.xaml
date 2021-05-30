@@ -19,109 +19,6 @@
         <resources:TrangThaiConverter x:Key="TrangThaiConverter"/>
         <resources:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter"/>
         <resources:BoolToHiddenConverter x:Key="BoolToHiddenConverter"/>
-        <!-- Colors -->
-        <Color x:Key="ExtWhiteColor">#FFEFEFEF</Color>
-        <Color x:Key="ExtGrayColor">#535353</Color>
-        <Color x:Key="ExtGrayLighterColor">#b2b2b2</Color>
-        <Color x:Key="ExtBrownColor">#FFAD9579</Color>
-        <Color x:Key="ExtGrayDarkerColor">#424242</Color>
-        <Color x:Key="ExtGrayDarkestColor">#282828</Color>
-
-        <SolidColorBrush x:Key="TextColor" Color="{DynamicResource ExtWhiteColor}"/>
-        <SolidColorBrush x:Key="SeperateLineColor" Color="{DynamicResource ExtGrayColor}"/>
-        <SolidColorBrush x:Key="IconColor" Color="{StaticResource ExtGrayLighterColor}"/>
-        <!-- Style -->
-        <Style x:Key="WindowStyle" TargetType="Window">
-            <Setter Property="WindowChrome.WindowChrome">
-                <Setter.Value>
-                    <WindowChrome CaptionHeight="0"
-                                CornerRadius="2"
-                                GlassFrameThickness="0"
-                                NonClientFrameEdges="None"
-                                ResizeBorderThickness="3"/>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="BorderButton" TargetType="Border">
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Border.BorderThickness" Value="1" />
-                    <Setter Property="Border.BorderBrush" Value="Gray" />
-                </Trigger>
-            </Style.Triggers>
-        </Style>
-
-        <SolidColorBrush x:Key="ListBox.Static.Background" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="ListBox.Static.Border" Color="#FFABADB3"/>
-        <SolidColorBrush x:Key="ListBox.Disabled.Background" Color="#FFFFFFFF"/>
-        <SolidColorBrush x:Key="ListBox.Disabled.Border" Color="#FFD9D9D9"/>
-        <Style x:Key="ListBoxStyleCustom" TargetType="{x:Type ListBox}">
-            <Setter Property="Background" Value="{x:Null}"/>
-            <Setter Property="BorderBrush" Value="{StaticResource ListBox.Static.Border}"/>
-            <Setter Property="BorderThickness" Value="1"/>
-            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-            <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-            <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
-            <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-            <Setter Property="VerticalContentAlignment" Value="Stretch"/>
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type ListBox}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Viewbox Stretch="Fill" StretchDirection="Both"
-                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <RepeatButton Tag="{Binding ElementName=scrollViewer}"
-                                              Background="{x:Null}" BorderThickness="0"
-                                              Click="Button_Left">
-                                    <fa:FontAwesome Icon="AngleLeft"
-                                                    VerticalAlignment="Center"
-                                                    HorizontalAlignment="Center"
-                                                    Foreground="{StaticResource IconColor}"/>
-                                </RepeatButton>
-                            </Viewbox>
-                            <Border x:Name="Bd" Grid.Column="1" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="1" SnapsToDevicePixels="true">
-                                <ScrollViewer x:Name="scrollViewer" Focusable="false" Padding="{TemplateBinding Padding}" 
-                                              HorizontalScrollBarVisibility="Hidden" HorizontalAlignment="Stretch">
-                                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                                </ScrollViewer>
-                            </Border>
-                            <Viewbox Grid.Column="2" Stretch="Fill" StretchDirection="Both"
-                                     HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <RepeatButton Tag="{Binding ElementName=scrollViewer}"
-                                              Background="{x:Null}" BorderThickness="0"
-                                              Click="Button_Right">
-                                    <fa:FontAwesome Icon="AngleRight"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Foreground="{StaticResource IconColor}"/>
-                                </RepeatButton>
-                            </Viewbox>
-                        </Grid>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsEnabled" Value="false">
-                                <Setter Property="Background" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Background}"/>
-                                <Setter Property="BorderBrush" TargetName="Bd" Value="{StaticResource ListBox.Disabled.Border}"/>
-                            </Trigger>
-                            <MultiTrigger>
-                                <MultiTrigger.Conditions>
-                                    <Condition Property="IsGrouping" Value="true"/>
-                                    <Condition Property="VirtualizingPanel.IsVirtualizingWhenGrouping" Value="false"/>
-                                </MultiTrigger.Conditions>
-                                <Setter Property="ScrollViewer.CanContentScroll" Value="false"/>
-                            </MultiTrigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <!-- Resource -->
     </UserControl.Resources>
 
     <Grid x:Name="gridTaoTrinhChieu">
@@ -176,7 +73,7 @@
                         <Style TargetType="TextBox">
                             <Setter Property="Background">
                                 <Setter.Value>
-                                    <SolidColorBrush Color="{StaticResource ExtGrayColor}"></SolidColorBrush>
+                                    <SolidColorBrush Color="{StaticResource MDTLGray}"></SolidColorBrush>
                                 </Setter.Value>
                             </Setter>
                             <Style.Triggers>
@@ -240,7 +137,7 @@
                                 <fa:FontAwesome Icon="AngleLeft"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
-                                                Foreground="{StaticResource IconColor}"/>
+                                                Foreground="{StaticResource MDTLIconBrush}"/>
                             </RepeatButton>
                         </Viewbox>
                         <Grid Grid.Column="1" Grid.ColumnSpan="3">
@@ -278,7 +175,7 @@
                                 <fa:FontAwesome Icon="AngleRight"
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
-                                                Foreground="{StaticResource IconColor}"/>
+                                                Foreground="{StaticResource MDTLIconBrush}"/>
                             </RepeatButton>
                         </Viewbox>
                     </Grid>

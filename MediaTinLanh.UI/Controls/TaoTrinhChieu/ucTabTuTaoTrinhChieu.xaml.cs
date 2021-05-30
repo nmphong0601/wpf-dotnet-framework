@@ -68,6 +68,8 @@ namespace MediaTinLanh.UI.Controls
 
             txtNoiDung.GotFocus += RemovePlaceholderTextBox;
             txtNoiDung.LostFocus += AddPlaceholderTextBox;
+
+
         }
 
         public void RemovePlaceholderTextBox(object sender, EventArgs e)
@@ -410,36 +412,7 @@ namespace MediaTinLanh.UI.Controls
             //}
         }
 
-        double offset = 0;
-        private void Button_Left(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Controls.Primitives.RepeatButton btn = sender as System.Windows.Controls.Primitives.RepeatButton;
-            ScrollViewer scrollViewer = btn.Tag as ScrollViewer;
-
-            ListBoxImage.ApplyTemplate();
-            ListBoxItem imageItem = ListBoxImage.ItemContainerGenerator.ContainerFromIndex(0) as ListBoxItem;
-
-            offset -= imageItem.ActualWidth;
-            if (offset < 0)
-                offset = 0;
-            scrollViewer.ScrollToHorizontalOffset(offset);
-        }
-
-        private void Button_Right(object sender, RoutedEventArgs e)
-        {
-            System.Windows.Controls.Primitives.RepeatButton btn = sender as System.Windows.Controls.Primitives.RepeatButton;
-            ScrollViewer scrollViewer = btn.Tag as ScrollViewer;
-
-            ListBoxImage.ApplyTemplate();
-            ListBoxItem imageItem = ListBoxImage.ItemContainerGenerator.ContainerFromIndex(0) as ListBoxItem;
-
-            offset += imageItem.ActualWidth;
-            if (offset > scrollViewer.ScrollableWidth)
-                offset = scrollViewer.ScrollableWidth;
-            scrollViewer.ScrollToHorizontalOffset(offset);
-        }
-
-
+        
 
 
         private ScrollBar _horizontalScrollBar;
