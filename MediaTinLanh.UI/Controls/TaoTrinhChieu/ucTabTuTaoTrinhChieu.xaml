@@ -129,55 +129,27 @@
                             <ColumnDefinition Width="20*" />
                             <ColumnDefinition Width="10*" />
                         </Grid.ColumnDefinitions>
-                        <Viewbox Grid.Column="0" Stretch="Fill" StretchDirection="Both" Panel.ZIndex="1"
-                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <RepeatButton x:Name="LeftButton" 
-                                          Background="{x:Null}" BorderThickness="0"
-                                          Click="LeftButton_Click">
-                                <fa:FontAwesome Icon="AngleLeft"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Foreground="{StaticResource MDTLIconBrush}"/>
-                            </RepeatButton>
-                        </Viewbox>
-                        <Grid Grid.Column="1" Grid.ColumnSpan="3">
-                            <ScrollViewer x:Name="HorizontalScroller" 
-                                          Style="{StaticResource MDTLHorizontalScrollViewer}"
-                                          VerticalScrollBarVisibility="Disabled"
-                                          HorizontalScrollBarVisibility="Hidden"
-                                          CanContentScroll="True"
-                                          Loaded="HorizontalScrollViewer_Loaded"
-                                          SizeChanged="HorizontalScrollViewer_SizeChanged"
-                                          ScrollChanged="HorizontalScrollViewer_ScrollChanged">
-                                <ItemsControl x:Name="tStack" 
-                                              ItemsSource="{Binding Source={StaticResource ImageContext}, Path=Images, Mode=TwoWay}">
-                                    <ItemsControl.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <!--<VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>-->
-                                            <UniformGrid Rows="1"/>
-                                        </ItemsPanelTemplate>
-                                    </ItemsControl.ItemsPanel>
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <Viewbox Stretch="Uniform" Margin="5 0 5 0">
-                                                <Image x:Name="ImageItem" Source="{Binding}"/>
-                                            </Viewbox>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-                            </ScrollViewer>
+                        <Grid Grid.Column="0" Grid.ColumnSpan="5">
+                            <ListBox x:Name="ListBoxImage169" Style="{StaticResource ListBoxStyleCustom}"
+                                     BorderThickness="0"
+                                     ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                     ItemsSource="{Binding Source={StaticResource ImageContext}, Path=Images, Mode=TwoWay}">
+                                <ListBox.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <!--<VirtualizingStackPanel IsItemsHost="True" Orientation="Horizontal"/>-->
+                                        <UniformGrid Rows="1"/>
+                                    </ItemsPanelTemplate>
+                                </ListBox.ItemsPanel>
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Viewbox Stretch="Uniform" Margin="5 0 5 0">
+                                            <Image Source="{Binding}"/>
+                                        </Viewbox>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                         </Grid>
-                        <Viewbox Grid.Column="4" Stretch="Fill" StretchDirection="Both" Panel.ZIndex="1"
-                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                            <RepeatButton x:Name="RightButton" 
-                                          Background="{x:Null}" BorderThickness="0"
-                                          Click="RightButton_Click">
-                                <fa:FontAwesome Icon="AngleRight"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Foreground="{StaticResource MDTLIconBrush}"/>
-                            </RepeatButton>
-                        </Viewbox>
                     </Grid>
                 </DockPanel>
                 <DockPanel Grid.Column="1" Margin="5">
@@ -193,7 +165,7 @@
                             <ColumnDefinition Width="10*" />
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0" Grid.ColumnSpan="5">
-                            <ListBox x:Name="ListBoxImage" Style="{StaticResource ListBoxStyleCustom}"
+                            <ListBox x:Name="ListBoxImage43" Style="{StaticResource ListBoxStyleCustom}"
                                      BorderThickness="0"
                                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
                                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
