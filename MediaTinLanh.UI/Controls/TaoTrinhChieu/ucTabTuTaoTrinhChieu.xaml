@@ -7,7 +7,6 @@
              xmlns:local="clr-namespace:MediaTinLanh.UI.Controls"
              xmlns:resources="clr-namespace:MediaTinLanh.UI.Resources"
              xmlns:vm="clr-namespace:MediaTinLanh.UI.ViewModels"
-             xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
